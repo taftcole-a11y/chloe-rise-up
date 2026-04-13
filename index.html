@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Rise Up! Study — Chloe's Game</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0d1117;
+  --bg2: #161b22;
+  --bg3: #21262d;
+  --border: rgba(255,255,255,0.08);
+  --border2: rgba(255,255,255,0.14);
+  --text: #e6edf3;
+  --text2: #8b949e;
+  --text3: #6e7681;
+  --accent: #58a6ff;
+  --accent2: #ff7b7b;
+  --green: #3fb950;
+  --green-bg: rgba(63,185,80,0.12);
+  --red: #f85149;
+  --red-bg: rgba(248,81,73,0.12);
+  --yellow: #d29922;
+  --radius: 12px;
+  --radius-lg: 18px;
+  --font: 'Nunito', sans-serif;
+  --font-body: 'Nunito Sans', sans-serif;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f0f4ff;
+    --bg2: #ffffff;
+    --bg3: #e8eef8;
+    --border: rgba(0,0,0,0.08);
+    --border2: rgba(0,0,0,0.14);
+    --text: #0d1117;
+    --text2: #555f6d;
+    --text3: #8892a4;
+    --accent: #2563eb;
+    --accent2: #dc2626;
+    --green: #16a34a;
+    --green-bg: rgba(22,163,74,0.1);
+    --red: #dc2626;
+    --red-bg: rgba(220,38,38,0.1);
+  }
+}
+
+html, body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+#app {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 14px 12px 24px;
+  min-height: 100vh;
+}
+
+/* ─── SCREENS ─── */
+.screen { display: none; }
+.screen.active { display: block; }
+
+/* ─── HEADER ─── */
+.game-title {
+  text-align: center;
+  margin-bottom: 2px;
+}
+.game-title h1 {
+  font-size: 26px;
+  font-weight: 900;
+  background: linear-gradient(135deg, #58a6ff 0%, #a78bfa 50%, #f97316 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
+}
+.game-title p {
+  font-size: 12px;
+  color: var(--text2);
+  font-family: var(--font-body);
+  margin-top: 2px;
+}
+
+/* ─── TABS ─── */
+.tabs {
+  display: flex;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin: 14px 0 12px;
+  flex-wrap: wrap;
+}
+.tab-btn {
+  flex: 1;
+  min-width: 52px;
+  padding: 9px 4px;
+  font-size: 10.5px;
+  font-weight: 700;
+  font-family: var(--font);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: var(--text2);
+  transition: all 0.18s;
+  text-align: center;
+  line-height: 1.3;
+  letter-spacing: 0.01em;
+}
+.tab-btn.active {
+  background: var(--accent);
+  color: #fff;
+}
+.tab-btn:hover:not(.active) { background: var(--bg3); color: var(--text); }
+
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* ─── SUBJECT CHIPS ─── */
+.tab-intro {
+  font-size: 12px;
+  color: var(--text2);
+  font-family: var(--font-body);
+  text-align: center;
+  margin-bottom: 10px;
+}
+.subject-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.subject-chip {
+  padding: 10px 6px;
+  border-radius: var(--radius);
+  font-size: 12px;
+  font-weight: 700;
+  font-family: var(--font);
+  border: 1.5px solid var(--border);
+  cursor: pointer;
+  background: var(--bg2);
+  color: var(--text2);
+  transition: all 0.18s;
+  text-align: center;
+  line-height: 1.3;
+}
+.subject-chip:hover, .subject-chip.sel {
+  border-color: var(--accent);
+  background: rgba(88,166,255,0.1);
+  color: var(--accent);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(88,166,255,0.2);
+}
+
+/* ─── AI TAB ─── */
+.field-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 6px;
+}
+.ai-input {
+  width: 100%;
+  padding: 10px 13px;
+  border: 1.5px solid var(--border2);
+  border-radius: var(--radius);
+  font-size: 13px;
+  font-family: var(--font-body);
+  color: var(--text);
+  background: var(--bg2);
+  outline: none;
+  margin-bottom: 10px;
+  transition: border-color 0.15s;
+}
+.ai-input:focus { border-color: var(--accent); }
+.ai-input::placeholder { color: var(--text3); }
+.topic-chips {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.topic-chip {
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  font-family: var(--font);
+  border: 1px solid var(--border2);
+  cursor: pointer;
+  background: var(--bg2);
+  color: var(--text2);
+  transition: all 0.15s;
+}
+.topic-chip:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(88,166,255,0.08);
+}
+.diff-row { display: flex; gap: 6px; margin-bottom: 4px; }
+.diff-btn {
+  flex: 1;
+  padding: 8px;
+  border-radius: var(--radius);
+  font-size: 12px;
+  font-weight: 700;
+  font-family: var(--font);
+  border: 1.5px solid var(--border);
+  cursor: pointer;
+  background: var(--bg2);
+  color: var(--text2);
+  transition: all 0.18s;
+  text-align: center;
+}
+.diff-btn.sel {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+/* ─── DROP ZONES ─── */
+.drop-zone {
+  border: 2px dashed var(--border2);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  cursor: pointer;
+  background: var(--bg2);
+  text-align: center;
+  outline: none;
+  transition: all 0.2s;
+  margin-bottom: 10px;
+}
+.drop-zone:hover, .drop-zone:focus { border-color: var(--accent); background: rgba(88,166,255,0.05); }
+.drop-zone input[type=file] { display: none; }
+.dz-icon { font-size: 28px; margin-bottom: 6px; }
+.dz-text { font-size: 13px; font-weight: 700; }
+.dz-sub { font-size: 11px; color: var(--text2); margin-top: 3px; font-family: var(--font-body); }
+.preview-img { max-height: 110px; border-radius: 8px; margin: 10px auto 0; display: block; max-width: 100%; }
+
+/* ─── TEXT AREA ─── */
+.text-area {
+  width: 100%;
+  min-height: 100px;
+  padding: 10px 13px;
+  border: 1.5px solid var(--border2);
+  border-radius: var(--radius);
+  font-size: 13px;
+  font-family: var(--font-body);
+  color: var(--text);
+  background: var(--bg2);
+  resize: vertical;
+  outline: none;
+  line-height: 1.5;
+  margin-bottom: 4px;
+  transition: border-color 0.15s;
+}
+.text-area:focus { border-color: var(--accent); }
+.char-count { font-size: 11px; color: var(--text3); text-align: right; margin-bottom: 8px; font-family: var(--font-body); }
+
+/* ─── INFO BOX ─── */
+.info-box {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 9px 12px;
+  font-size: 11.5px;
+  font-family: var(--font-body);
+  color: var(--text2);
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+/* ─── MAIN BUTTON ─── */
+.btn-main {
+  display: block;
+  width: 100%;
+  padding: 13px;
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 15px;
+  font-weight: 800;
+  font-family: var(--font);
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.02em;
+  box-shadow: 0 4px 16px rgba(37,99,235,0.35);
+}
+.btn-main:disabled { opacity: 0.3; cursor: default; box-shadow: none; }
+.btn-main:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(37,99,235,0.45); }
+
+/* ─── STATUS ─── */
+.status {
+  font-size: 12px;
+  font-family: var(--font-body);
+  color: var(--text2);
+  text-align: center;
+  margin-top: 8px;
+  min-height: 16px;
+}
+.status.err { color: var(--red); }
+.status.ok { color: var(--green); }
+
+/* ─── LOADING ─── */
+#load-screen { text-align: center; padding: 60px 0; }
+.spinner {
+  width: 40px; height: 40px;
+  border: 3px solid var(--border2);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 16px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.load-text { font-size: 16px; font-weight: 800; }
+.load-sub { font-size: 12px; color: var(--text2); margin-top: 5px; font-family: var(--font-body); }
+
+/* ─── GAME HUD ─── */
+.game-hud {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  gap: 6px;
+}
+.hud-pill {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.hearts { display: flex; gap: 3px; align-items: center; }
+.heart { font-size: 15px; transition: all 0.3s; }
+.heart.lost { opacity: 0.15; transform: scale(0.8); }
+
+/* ─── CANVAS ─── */
+#canvas-wrap {
+  width: 100%;
+  height: 480px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  margin-bottom: 10px;
+  position: relative;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+canvas { display: block; width: 100%; height: 100%; }
+
+/* ─── QUESTION CARD ─── */
+.q-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 13px;
+  margin-bottom: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+.q-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.level-badge {
+  font-size: 10px;
+  font-weight: 800;
+  padding: 2px 9px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #2563eb22, #7c3aed22);
+  color: var(--accent);
+  border: 1px solid rgba(88,166,255,0.2);
+}
+.q-text {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  line-height: 1.5;
+  color: var(--text);
+}
+.ans-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
+.ans-btn {
+  background: var(--bg);
+  border: 1.5px solid var(--border2);
+  border-radius: var(--radius);
+  padding: 10px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: var(--font);
+  cursor: pointer;
+  text-align: left;
+  line-height: 1.4;
+  color: var(--text);
+  transition: all 0.15s;
+}
+.ans-btn:hover:not(:disabled) {
+  background: var(--bg3);
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-1px);
+}
+.ans-btn.correct { background: var(--green-bg); border-color: var(--green); color: var(--green); }
+.ans-btn.wrong { background: var(--red-bg); border-color: var(--red); color: var(--red); }
+.ans-btn:disabled { cursor: default; transform: none; }
+
+/* ─── FEEDBACK ─── */
+.feedback {
+  border-radius: var(--radius);
+  padding: 10px 13px;
+  font-size: 12.5px;
+  font-family: var(--font-body);
+  margin-bottom: 8px;
+  display: none;
+  line-height: 1.5;
+  font-weight: 600;
+  animation: fadeUp 0.25s ease;
+}
+@keyframes fadeUp { from { opacity:0; transform:translateY(4px); } to { opacity:1; transform:none; } }
+.feedback.c { display: block; background: var(--green-bg); color: var(--green); border: 1px solid rgba(63,185,80,0.25); }
+.feedback.w { display: block; background: var(--red-bg); color: var(--red); border: 1px solid rgba(248,81,73,0.25); }
+
+/* ─── END SCREEN ─── */
+#end-screen { text-align: center; padding: 32px 0; }
+.end-emoji { font-size: 56px; margin-bottom: 10px; animation: bounce 0.5s ease; }
+@keyframes bounce { 0%,100%{transform:scale(1)} 50%{transform:scale(1.15)} }
+.end-title { font-size: 26px; font-weight: 900; margin-bottom: 5px; letter-spacing: -0.5px; }
+.end-sub { font-size: 13px; font-family: var(--font-body); color: var(--text2); margin-bottom: 22px; }
+.stat-row { display: flex; gap: 10px; justify-content: center; margin-bottom: 24px; }
+.stat-box {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 14px 22px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+.stat-n { font-size: 26px; font-weight: 900; }
+.stat-l { font-size: 11px; font-family: var(--font-body); color: var(--text2); margin-top: 2px; }
+.btn-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.btn-sec {
+  background: var(--bg2);
+  border: 1.5px solid var(--border2);
+  border-radius: var(--radius);
+  padding: 10px 20px;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: var(--font);
+  cursor: pointer;
+  color: var(--text);
+  transition: all 0.15s;
+}
+.btn-sec:hover { background: var(--bg3); border-color: var(--accent); color: var(--accent); }
+.btn-play-again {
+  padding: 11px 28px;
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-weight: 800;
+  font-family: var(--font);
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 14px rgba(37,99,235,0.35);
+}
+.btn-play-again:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(37,99,235,0.45); }
+</style>
+</head>
+<body>
+
+<div id="app">
+
+<!-- ── UPLOAD / HOME SCREEN ── -->
+<div id="upload-screen" class="screen active">
+  <div class="game-title">
+    <h1>🎈 Rise Up! Study</h1>
+    <p>Answer questions to clear obstacles — gets harder each level!</p>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('tab-subject',this)">📚 Subjects</button>
+    <button class="tab-btn" onclick="switchTab('tab-ai',this)">✨ Ask AI</button>
+    <button class="tab-btn" onclick="switchTab('tab-photo',this)">📸 Photo</button>
+    <button class="tab-btn" onclick="switchTab('tab-paste-img',this)">🖼️ Paste Img</button>
+    <button class="tab-btn" onclick="switchTab('tab-text',this)">📋 Paste Text</button>
+  </div>
+
+  <!-- SUBJECTS TAB -->
+  <div id="tab-subject" class="tab-panel active">
+    <div class="tab-intro">Pick a subject — works instantly, no internet needed:</div>
+    <div class="subject-grid">
+      <div class="subject-chip" onclick="pickSubject('romans',this)">📖<br>Romans 1-8</div>
+      <div class="subject-chip" onclick="pickSubject('algebra',this)">🔢<br>Algebra 1</div>
+      <div class="subject-chip" onclick="pickSubject('science',this)">🔬<br>Science</div>
+      <div class="subject-chip" onclick="pickSubject('history',this)">🏛️<br>History</div>
+      <div class="subject-chip" onclick="pickSubject('geography',this)">🌍<br>Geography</div>
+      <div class="subject-chip" onclick="pickSubject('ela',this)">✏️<br>ELA</div>
+    </div>
+  </div>
+
+  <!-- AI TAB -->
+  <div id="tab-ai" class="tab-panel">
+    <div class="field-label">What do you want to study?</div>
+    <div style="display:flex;gap:8px;margin-bottom:10px;">
+      <input class="ai-input" id="topic-input" placeholder="e.g. solving inequalities, the Civil War, photosynthesis..." oninput="handleTopicInput()" onkeydown="if(event.key==='Enter')startGame()" style="margin-bottom:0;flex:1;">
+      <button id="ai-submit-btn" onclick="startGame()" disabled style="flex-shrink:0;padding:0 16px;background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;border:none;border-radius:var(--radius);font-size:13px;font-weight:800;font-family:var(--font);cursor:pointer;opacity:0.35;transition:all 0.2s;white-space:nowrap;" title="Generate questions">✨ Go!</button>
+    </div>
+    <div class="field-label">Quick picks:</div>
+    <div class="topic-chips">
+      <div class="topic-chip" onclick="setTopic('Solving equations and inequalities')">Solving equations</div>
+      <div class="topic-chip" onclick="setTopic('Slope and linear equations')">Slope</div>
+      <div class="topic-chip" onclick="setTopic('Systems of equations')">Systems of equations</div>
+      <div class="topic-chip" onclick="setTopic('Polynomials and factoring')">Polynomials</div>
+      <div class="topic-chip" onclick="setTopic('The American Revolution')">American Revolution</div>
+      <div class="topic-chip" onclick="setTopic('Cell biology and organelles')">Cell biology</div>
+      <div class="topic-chip" onclick="setTopic('World War II')">World War II</div>
+      <div class="topic-chip" onclick="setTopic('Literary devices')">Literary devices</div>
+      <div class="topic-chip" onclick="setTopic('The Solar System')">Solar System</div>
+      <div class="topic-chip" onclick="setTopic('Human body systems')">Human body</div>
+    </div>
+    <div class="field-label">Difficulty:</div>
+    <div class="diff-row" style="margin-bottom:10px;">
+      <div class="diff-btn sel" onclick="setDiff('easy',this)">😊 Easy</div>
+      <div class="diff-btn" onclick="setDiff('medium',this)">🤔 Medium</div>
+      <div class="diff-btn" onclick="setDiff('hard',this)">🔥 Hard</div>
+    </div>
+    <div class="info-box">⚡ Requires internet connection to generate questions.</div>
+  </div>
+
+  <!-- PHOTO TAB -->
+  <div id="tab-photo" class="tab-panel">
+    <div class="drop-zone" onclick="document.getElementById('file-in').click()">
+      <input type="file" id="file-in" accept="image/*" onchange="handleFile(event)">
+      <div class="dz-icon">📸</div>
+      <div class="dz-text">Tap to upload a photo of your notes</div>
+      <div class="dz-sub">JPG, PNG, HEIC supported</div>
+      <img id="preview-photo" class="preview-img" style="display:none">
+    </div>
+    <div class="info-box">⚡ AI reads your notes and creates questions. Requires internet.</div>
+  </div>
+
+  <!-- PASTE IMAGE TAB -->
+  <div id="tab-paste-img" class="tab-panel">
+    <div class="drop-zone" id="paste-img-zone" tabindex="0" onclick="this.focus()" onpaste="handleImagePaste(event)">
+      <div class="dz-icon">🖼️</div>
+      <div class="dz-text">Click here, then paste an image</div>
+      <div class="dz-sub">Right-click any image → Copy Image → Ctrl+V / Cmd+V</div>
+      <img id="preview-paste-img" class="preview-img" style="display:none">
+    </div>
+    <div class="info-box">⚡ Works with screenshots too! Requires internet.</div>
+  </div>
+
+  <!-- PASTE TEXT TAB -->
+  <div id="tab-text" class="tab-panel">
+    <textarea class="text-area" id="notes-text" placeholder="Paste or type your notes here..." oninput="handleTextInput()"></textarea>
+    <div class="char-count"><span id="char-count">0</span> characters</div>
+    <div class="info-box">⚡ Paste from Google Docs, websites, your notes app, etc. Requires internet.</div>
+  </div>
+
+  <button class="btn-main" id="go-btn" onclick="startGame()" disabled style="margin-top:6px;">🚀 Let's Play!</button>
+  <div class="status" id="up-status"></div>
+</div>
+
+<!-- ── LOADING ── -->
+<div id="load-screen" class="screen">
+  <div class="spinner"></div>
+  <div class="load-text" id="load-text">Generating questions...</div>
+  <div class="load-sub">AI is building your quiz ✨</div>
+</div>
+
+<!-- ── GAME SCREEN ── -->
+<div id="game-screen" class="screen">
+  <div class="game-hud">
+    <div class="hud-pill">Q <b id="q-num">1</b>/<b id="q-tot">9</b></div>
+    <div class="hearts">
+      <span class="heart" id="h1">❤️</span>
+      <span class="heart" id="h2">❤️</span>
+      <span class="heart" id="h3">❤️</span>
+      <span class="heart" id="h4">❤️</span>
+      <span class="heart" id="h5">❤️</span>
+    </div>
+    <div class="hud-pill">⭐ <b id="score">0</b></div>
+  </div>
+  <div id="canvas-wrap"><canvas id="gc"></canvas></div>
+  <div class="q-card">
+    <div class="q-label">
+      <span>Answer to clear the path 🎯</span>
+      <span class="level-badge" id="level-badge">Level 1</span>
+    </div>
+    <div class="q-text" id="q-text"></div>
+    <div class="ans-grid" id="ans-grid"></div>
+  </div>
+  <div class="feedback" id="feedback"></div>
+</div>
+
+<!-- ── END SCREEN ── -->
+<div id="end-screen" class="screen">
+  <div class="end-emoji" id="end-emoji">🎈</div>
+  <div class="end-title" id="end-title">You escaped!</div>
+  <div class="end-sub" id="end-sub">Amazing!</div>
+  <div class="stat-row">
+    <div class="stat-box"><div class="stat-n" id="fin-score">0</div><div class="stat-l">Points</div></div>
+    <div class="stat-box"><div class="stat-n" id="fin-cor">0</div><div class="stat-l">Correct</div></div>
+    <div class="stat-box"><div class="stat-n" id="fin-pct">0%</div><div class="stat-l">Accuracy</div></div>
+  </div>
+  <div class="btn-row">
+    <button class="btn-play-again" onclick="replayGame()">🔄 Play Again</button>
+    <button class="btn-sec" onclick="goHome()">🏠 New Topic</button>
+  </div>
+</div>
+
+</div><!-- /app -->
+
+<script>
+/* ═══════════════════════════════════════
+   QUESTION BANKS
+═══════════════════════════════════════ */
+const BANKS = {
+  romans:[
+    {q:"Who wrote the book of Romans?",a:"Paul",w:["Peter","James","Luke"]},
+    {q:"Who is Romans written to?",a:"Christians in Rome",w:["Christians in Corinth","The Jews in Jerusalem","The disciples"]},
+    {q:"Romans 3:23 says all have…",a:"Sinned and fall short of God's glory",w:["Been forgiven by God","A purpose in life","The Holy Spirit"]},
+    {q:"Romans 6:23 — the wages of sin is…",a:"Death",w:["Sadness","Punishment","Loneliness"]},
+    {q:"Romans 5:8 — God shows love by…",a:"Christ dying for us while we were sinners",w:["Giving us the Bible","Creating the world","Sending angels"]},
+    {q:"Justification in Romans 5:1 comes through…",a:"Faith",w:["Good deeds","The law","Prayer"]},
+    {q:"Romans 8:28 — God works all things for good for…",a:"Those who love Him",w:["Everyone","Only the apostles","Those who obey"]},
+    {q:"Romans 8:1 — no condemnation for those…",a:"In Christ Jesus",w:["Who pray daily","Who follow the law","Who go to church"]},
+    {q:"Romans 1:16 calls the gospel…",a:"The power of God for salvation",w:["A story about Jesus","A set of rules","A letter from Paul"]},
+    {q:"Romans 8:38-39 — nothing can separate us from…",a:"The love of God",w:["Our faith","The church","The Holy Spirit"]},
+    {q:"Paul calls himself in Romans 1:1…",a:"A servant of Christ Jesus",w:["A king of Israel","A teacher of the law","An apostle of Rome"]},
+    {q:"Romans 5:1 — we have peace with…",a:"God through Jesus Christ",w:["Each other","Ourselves","Our enemies"]},
+    {q:"Romans 8:15 — we received a spirit of…",a:"Adoption as sons",w:["Fear and trembling","Judgment","The old law"]},
+    {q:"Romans 8:31 — if God is for us…",a:"Who can be against us?",w:["We have nothing to fear","We will never suffer","We are perfect"]},
+    {q:"Romans 7 describes a struggle between…",a:"Wanting good but doing sin",w:["Jews and Gentiles","Faith and works","Heaven and earth"]},
+    {q:"Romans 8:26 — the Spirit intercedes when…",a:"We don't know what to pray",w:["We sin","We feel alone","We read Scripture"]},
+    {q:"Romans 6:4 — buried with Christ through…",a:"Baptism",w:["Prayer","Good works","Faith alone"]},
+    {q:"In Romans 3, both Jews and Gentiles are…",a:"Under sin",w:["Saved already","Chosen by God","Equal before the law"]},
+  ],
+  algebra:[
+    {q:"Solve: 2x + 5 = 13",a:"x = 4",w:["x = 3","x = 9","x = 6"]},
+    {q:"Solve: 3x − 7 = 11",a:"x = 6",w:["x = 4","x = 8","x = 3"]},
+    {q:"Which satisfies 4x + 2 > 18?",a:"x = 5",w:["x = 3","x = 4","x = 2"]},
+    {q:"Slope of y = 3x − 7?",a:"3",w:["-7","7","-3"]},
+    {q:"Slope between (2,4) and (6,12)?",a:"2",w:["3","4","½"]},
+    {q:"What form is y = mx + b?",a:"Slope-intercept form",w:["Standard form","Point-slope form","Vertex form"]},
+    {q:"x + y = 10 and x − y = 4. Find x.",a:"7",w:["3","6","5"]},
+    {q:"Factor: x² + 5x + 6",a:"(x+2)(x+3)",w:["(x+1)(x+6)","(x+5)(x+1)","(x−2)(x−3)"]},
+    {q:"Degree of 4x³ + 2x − 7?",a:"3",w:["1","2","4"]},
+    {q:"Simplify: (x+3)(x−3)",a:"x² − 9",w:["x² + 9","x² − 6x + 9","x² + 6x − 9"]},
+    {q:"Two-term polynomial is called?",a:"Binomial",w:["Monomial","Trinomial","Quadratic"]},
+    {q:"Solve: −2x + 8 = 2",a:"x = 3",w:["x = 5","x = −3","x = 4"]},
+    {q:"y-intercept of y = 4x + 9?",a:"9",w:["4","−9","0"]},
+    {q:"Adding equations to cancel a variable is?",a:"Elimination",w:["Substitution","Graphing","Factoring"]},
+    {q:"Solve: 5(x−2) = 20",a:"x = 6",w:["x = 4","x = 8","x = 2"]},
+    {q:"Slope of a horizontal line?",a:"0",w:["1","Undefined","−1"]},
+    {q:"Factor GCF: 6x² + 9x",a:"3x(2x+3)",w:["3(2x²+3x)","6x(x+9)","9x(x+6)"]},
+    {q:"Solutions of x² − 9 = 0?",a:"x = 3 and x = −3",w:["x = 9","x = 3 only","x = −9"]},
+  ],
+  science:[
+    {q:"'Powerhouse of the cell'?",a:"Mitochondria",w:["Nucleus","Ribosome","Golgi apparatus"]},
+    {q:"Chemical formula for water?",a:"H₂O",w:["CO₂","NaCl","O₂"]},
+    {q:"Rock formed from cooled magma?",a:"Igneous rock",w:["Sedimentary","Metamorphic","Limestone"]},
+    {q:"Gas plants absorb in photosynthesis?",a:"Carbon dioxide",w:["Oxygen","Nitrogen","Hydrogen"]},
+    {q:"Atomic number of carbon?",a:"6",w:["12","8","14"]},
+    {q:"Speed of light (approx)?",a:"300,000 km/s",w:["150,000 km/s","3,000 km/s","30,000 km/s"]},
+    {q:"What keeps planets orbiting the sun?",a:"Gravity",w:["Magnetism","Friction","Inertia"]},
+    {q:"Newton's first law — objects at rest…",a:"Stay at rest unless acted upon",w:["Speed up over time","F = ma","Have no mass"]},
+    {q:"Function of the nucleus?",a:"Controls cell / stores DNA",w:["Makes energy","Digests waste","Makes proteins"]},
+  ],
+  history:[
+    {q:"World War II ended in?",a:"1945",w:["1918","1939","1950"]},
+    {q:"Primary author of the Declaration of Independence?",a:"Thomas Jefferson",w:["Benjamin Franklin","George Washington","John Adams"]},
+    {q:"Berlin Wall fell in?",a:"1989",w:["1961","1975","1991"]},
+    {q:"First US President?",a:"George Washington",w:["Abraham Lincoln","John Adams","Thomas Jefferson"]},
+    {q:"What started World War I?",a:"Assassination of Archduke Franz Ferdinand",w:["Invasion of Poland","Bombing of Pearl Harbor","Fall of Berlin Wall"]},
+    {q:"American Civil War ended in?",a:"1865",w:["1861","1870","1848"]},
+    {q:"First person to walk on the moon?",a:"Neil Armstrong",w:["Buzz Aldrin","Yuri Gagarin","John Glenn"]},
+    {q:"Empire that built the Colosseum?",a:"Roman Empire",w:["Greek Empire","Ottoman Empire","Byzantine Empire"]},
+    {q:"Cold War was mainly between which two nations?",a:"USA and USSR",w:["USA and China","UK and Germany","France and Russia"]},
+  ],
+  geography:[
+    {q:"Largest continent?",a:"Asia",w:["Africa","North America","Europe"]},
+    {q:"Longest river in the world?",a:"The Nile",w:["The Amazon","The Mississippi","The Yangtze"]},
+    {q:"Largest ocean?",a:"Pacific Ocean",w:["Atlantic Ocean","Indian Ocean","Arctic Ocean"]},
+    {q:"Capital of Australia?",a:"Canberra",w:["Sydney","Melbourne","Brisbane"]},
+    {q:"Capital of Brazil?",a:"Brasília",w:["Rio de Janeiro","São Paulo","Salvador"]},
+    {q:"Smallest country in the world?",a:"Vatican City",w:["Monaco","San Marino","Liechtenstein"]},
+    {q:"Largest hot desert?",a:"The Sahara",w:["The Gobi","The Arabian","The Kalahari"]},
+    {q:"Mountain range separating Europe and Asia?",a:"The Ural Mountains",w:["The Alps","The Himalayas","The Rockies"]},
+    {q:"How many countries in Africa?",a:"54",w:["42","67","31"]},
+  ],
+  ela:[
+    {q:"A metaphor is?",a:"Direct comparison — no 'like' or 'as'",w:["Uses 'like' or 'as'","Imitates a sound","Gives traits to non-humans"]},
+    {q:"The protagonist is?",a:"The main character",w:["The villain","The narrator","The antagonist"]},
+    {q:"Irony means?",a:"Opposite of what's expected happens",w:["Repeated sound","Exaggeration","Multiple meanings"]},
+    {q:"Foreshadowing is?",a:"Hints about future events",w:["A flashback","The climax","The resolution"]},
+    {q:"An antagonist is?",a:"Character opposing the protagonist",w:["The main character","The narrator","A minor character"]},
+    {q:"Theme of a story is?",a:"The central message or lesson",w:["The setting","The plot","The point of view"]},
+    {q:"Inference means?",a:"Using clues to draw a conclusion",w:["Summarizing","Author's purpose","Identifying genre"]},
+    {q:"Alliteration is?",a:"Repeated consonant sounds at word starts",w:["Vowel repetition","End rhyming","A comparison"]},
+    {q:"Simile uses which words to compare?",a:"Like or as",w:["But or and","Is or are","Not or never"]},
+  ]
+};
+
+/* ═══════════════════════════════════════
+   LEVEL PARAMETERS
+═══════════════════════════════════════ */
+function levelParams(lvl) {
+  return {
+    baseSpeed: 0.45 + lvl * 0.05,
+    obsCount: lvl < 3 ? 1 : lvl < 6 ? 2 : 3,
+    balloonRise: -(0.18 - lvl * 0.006),
+    label: String(lvl + 1)
+  };
+}
+
+/* ═══════════════════════════════════════
+   STATE
+═══════════════════════════════════════ */
+let questions=[], qIdx=0, score=0, correctCount=0, lives=5;
+let imageB64=null, pastedB64=null, notesText='', selSubject=null, aiTopic='', difficulty='easy';
+let activeTab='tab-subject', lastLabel='Study';
+let answered=false, gameOver=false;
+let canvas, ctx, W, H, raf=null;
+let bx, by, bRadius=20, bVY;
+let obstacles=[];
+
+/* ═══════════════════════════════════════
+   UTILITIES
+═══════════════════════════════════════ */
+function shuffle(a){ return [...a].sort(()=>Math.random()-0.5); }
+function showScreen(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); document.getElementById(id).classList.add('active'); }
+function setStatus(msg,cls=''){ const s=document.getElementById('up-status'); s.textContent=msg; s.className='status'+(cls?' '+cls:''); }
+function checkReady(){ document.getElementById('go-btn').disabled=!(selSubject||(aiTopic.trim().length>2)||imageB64||pastedB64||(notesText.trim().length>20)); }
+
+/* ═══════════════════════════════════════
+   UI INTERACTIONS
+═══════════════════════════════════════ */
+function switchTab(id,btn){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  activeTab=id;
+  if(id==='tab-paste-img') setTimeout(()=>document.getElementById('paste-img-zone').focus(),100);
+}
+function updateAiBtn(){ const btn=document.getElementById('ai-submit-btn'); if(btn){const ok=aiTopic.trim().length>2; btn.disabled=!ok; btn.style.opacity=ok?'1':'0.35'; btn.style.cursor=ok?'pointer':'default';} }
+function handleTopicInput(){ aiTopic=document.getElementById('topic-input').value; if(aiTopic.trim().length>2){selSubject=null;setStatus('Topic ready! ✓','ok');}else setStatus(''); checkReady(); updateAiBtn(); }
+function setTopic(t){ document.getElementById('topic-input').value=t; aiTopic=t; selSubject=null; setStatus('Topic: '+t+' ✓','ok'); checkReady(); updateAiBtn(); }
+function setDiff(d,el){ difficulty=d; document.querySelectorAll('.diff-btn').forEach(b=>b.classList.remove('sel')); el.classList.add('sel'); }
+function handleFile(e){ const f=e.target.files[0]; if(!f)return; readImg(f,'preview-photo',b64=>{imageB64=b64;pastedB64=null;notesText='';selSubject=null;aiTopic='';setStatus('Photo loaded! ✓','ok');checkReady();}); }
+function readImg(file,pid,cb){ const r=new FileReader(); r.onload=ev=>{const s=ev.target.result;const i=document.getElementById(pid);if(i){i.src=s;i.style.display='block';}cb(s.split(',')[1]);}; r.readAsDataURL(file); }
+function handleImagePaste(e){ const items=(e.clipboardData||{}).items||[]; for(let it of items){if(it.type.startsWith('image/')){e.preventDefault();readImg(it.getAsFile(),'preview-paste-img',b64=>{pastedB64=b64;imageB64=null;notesText='';selSubject=null;aiTopic='';setStatus('Image pasted! ✓','ok');checkReady();});return;}} setStatus('No image found.','err'); }
+document.addEventListener('paste',e=>{if(activeTab==='tab-paste-img')handleImagePaste(e);});
+function handleTextInput(){ notesText=document.getElementById('notes-text').value; document.getElementById('char-count').textContent=notesText.length; if(notesText.trim().length>20){selSubject=null;setStatus('Notes ready! ✓','ok');}else setStatus(''); checkReady(); }
+function pickSubject(sub,el){
+  selSubject=sub; imageB64=null; pastedB64=null; notesText=''; aiTopic='';
+  document.querySelectorAll('.subject-chip').forEach(c=>c.classList.remove('sel')); el.classList.add('sel');
+  const names={romans:'Romans 1-8',algebra:'Algebra 1',science:'Science',history:'History',geography:'Geography',ela:'ELA'};
+  lastLabel=names[sub]||sub;
+  setStatus(lastLabel+' — ready! ✓','ok'); checkReady();
+}
+
+/* ═══════════════════════════════════════
+   GAME START
+═══════════════════════════════════════ */
+async function startGame(){
+  if(selSubject){
+    const raw=shuffle(BANKS[selSubject]).slice(0,9);
+    questions=raw.map(q=>({question:q.q,correct:q.a,answers:shuffle([q.a,...q.w.slice(0,3)])}));
+    initGame(lastLabel);
+    return;
+  }
+  showScreen('load-screen');
+  try{
+    const b64=imageB64||pastedB64;
+    if(aiTopic.trim().length>2) await genFromTopic(aiTopic.trim(),difficulty);
+    else if(b64) await genFromImage(b64);
+    else if(notesText.trim().length>20) await genFromText(notesText);
+  }catch(e){
+    showScreen('upload-screen');
+    setStatus('Connection error — use 📚 Subjects which always works!','err');
+  }
+}
+
+async function callClaude(msgs){
+  const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1400,messages:msgs})});
+  if(!r.ok) throw new Error('API '+r.status);
+  const d=await r.json();
+  if(d.error) throw new Error(d.error.message);
+  return d.content.map(i=>i.text||'').join('');
+}
+
+const BASE_P=`Generate exactly 9 multiple choice study questions. Return ONLY valid JSON (no markdown):
+{"subject":"<topic>","questions":[{"question":"<q>","correct":"<correct>","answers":["<correct>","<w1>","<w2>","<w3>"]}]}
+Rules: 4 shuffled answers, answers under 9 words.`;
+
+async function genFromTopic(t,d){ const dt={easy:'straightforward',medium:'challenging',hard:'advanced and tricky'}[d]; const txt=await callClaude([{role:'user',content:BASE_P+'\nTopic:"'+t+'"\nDifficulty:'+dt}]); parseInit(txt); }
+async function genFromImage(b64){ const txt=await callClaude([{role:'user',content:[{type:'image',source:{type:'base64',media_type:'image/jpeg',data:b64}},{type:'text',text:BASE_P+'\nBase on this image.'}]}]); parseInit(txt); }
+async function genFromText(notes){ const txt=await callClaude([{role:'user',content:BASE_P+'\nNotes:\n'+notes.slice(0,4000)}]); parseInit(txt); }
+function parseInit(raw){ const p=JSON.parse(raw.replace(/```json|```/g,'').trim()); questions=p.questions; lastLabel=p.subject||'Quiz'; initGame(lastLabel); }
+
+/* ═══════════════════════════════════════
+   GAME INIT
+═══════════════════════════════════════ */
+function initGame(label){
+  lastLabel=label; qIdx=0; score=0; correctCount=0; lives=5; answered=false; gameOver=false;
+  document.getElementById('q-num').textContent=1;
+  document.getElementById('q-tot').textContent=questions.length;
+  document.getElementById('score').textContent=0;
+  document.getElementById('feedback').className='feedback';
+  updateHearts();
+  showScreen('game-screen');
+  canvas=document.getElementById('gc');
+  W=canvas.parentElement.clientWidth;
+  H=canvas.parentElement.clientHeight;
+  canvas.width=W; canvas.height=H;
+  ctx=canvas.getContext('2d');
+  resetLevel(0);
+  if(raf) cancelAnimationFrame(raf);
+  raf=requestAnimationFrame(loop);
+}
+
+function resetLevel(lvl){
+  const p=levelParams(lvl);
+  bx=W/2; by=H-55; bVY=p.balloonRise;
+  obstacles=[];
+  for(let i=0;i<p.obsCount;i++) spawnObstacle(p.baseSpeed,i,p.obsCount);
+  document.getElementById('level-badge').textContent='Level '+p.label;
+  renderQuestion(lvl);
+  answered=false;
+  document.getElementById('feedback').className='feedback';
+}
+
+function goHome(){
+  if(raf) cancelAnimationFrame(raf);
+  imageB64=null; pastedB64=null; notesText=''; selSubject=null; aiTopic='';
+  ['notes-text','topic-input'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  document.getElementById('char-count').textContent='0';
+  document.getElementById('preview-photo').style.display='none';
+  document.getElementById('preview-paste-img').style.display='none';
+  document.querySelectorAll('.subject-chip').forEach(c=>c.classList.remove('sel'));
+  document.getElementById('go-btn').disabled=true;
+  setStatus('');
+  showScreen('upload-screen');
+}
+function replayGame(){ initGame(lastLabel); }
+
+/* ═══════════════════════════════════════
+   GAME LOOP
+═══════════════════════════════════════ */
+const SHAPES=['rect','rect','circle','diamond'];
+const COLORS=['#378ADD','#D85A30','#1D9E75','#BA7517','#D4537E','#534AB7','#0ea5e9','#f97316'];
+
+function spawnObstacle(speed,idx,total){
+  const fromLeft=idx%2===0;
+  const color=COLORS[Math.floor(Math.random()*COLORS.length)];
+  const shape=SHAPES[Math.floor(Math.random()*SHAPES.length)];
+  const w=55+Math.random()*75;
+  const h=28+Math.random()*20;
+  const section=(H*0.6)/Math.max(total,1);
+  const yBase=H*0.12+idx*section;
+  const y=yBase+Math.random()*section*0.6;
+  obstacles.push({x:fromLeft?-w:W+w,y,w,h,shape,color,vx:fromLeft?speed:-speed,alive:true,alpha:1,clearing:false,clearTimer:0});
+}
+
+function loop(){ if(gameOver)return; raf=requestAnimationFrame(loop); update(); drawScene(); }
+
+function update(){
+  const p=levelParams(qIdx);
+  by+=bVY;
+  bx=W/2+Math.sin(Date.now()/2000)*12;
+  obstacles.forEach(o=>{
+    if(!o.alive)return;
+    if(o.clearing){o.clearTimer++;o.alpha=Math.max(0,1-o.clearTimer/20);if(o.clearTimer>20)o.alive=false;return;}
+    o.x+=o.vx;
+    if(o.x+o.w/2>W+8) o.vx=-Math.abs(o.vx);
+    if(o.x-o.w/2<-8) o.vx=Math.abs(o.vx);
+  });
+  if(!answered){
+    for(let o of obstacles.filter(o=>o.alive&&!o.clearing)){
+      if(balloonHits(o)){
+        o.clearing=true; lives--; updateHearts();
+        by=Math.min(by+70,H-55);
+        if(lives<=0){endGame(false);return;}
+        setTimeout(()=>{if(!gameOver)spawnObstacle(p.baseSpeed,0,1);},900);
+        break;
+      }
+    }
+  }
+  if(by<-bRadius*2){
+    if(qIdx>=questions.length-1) endGame(true);
+    else{ qIdx++; document.getElementById('q-num').textContent=qIdx+1; resetLevel(qIdx); }
+  }
+}
+
+function balloonHits(o){
+  const cx=Math.max(o.x-o.w/2,Math.min(bx,o.x+o.w/2));
+  const cy=Math.max(o.y-o.h/2,Math.min(by,o.y+o.h/2));
+  const dx=bx-cx, dy=by-cy;
+  return dx*dx+dy*dy<bRadius*bRadius;
+}
+
+/* ═══════════════════════════════════════
+   DRAWING
+═══════════════════════════════════════ */
+function drawScene(){
+  ctx.clearRect(0,0,W,H);
+  const dark=matchMedia('(prefers-color-scheme:dark)').matches;
+  const hue=210-qIdx*5;
+  const g=ctx.createLinearGradient(0,0,0,H);
+  if(dark){
+    g.addColorStop(0,`hsl(${hue},45%,10%)`);
+    g.addColorStop(1,`hsl(${hue},38%,5%)`);
+  }else{
+    g.addColorStop(0,`hsl(${hue},72%,84%)`);
+    g.addColorStop(1,`hsl(${hue},55%,93%)`);
+  }
+  ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+
+  /* clouds */
+  drawCloud(W*0.12,H*0.06,0.7,dark);
+  drawCloud(W*0.72,H*0.15,0.5,dark);
+  drawCloud(W*0.43,H*0.28,0.38,dark);
+  drawCloud(W*0.2,H*0.45,0.42,dark);
+  drawCloud(W*0.78,H*0.55,0.35,dark);
+  drawCloud(W*0.5,H*0.72,0.45,dark);
+
+  /* escape zone line */
+  ctx.setLineDash([6,4]);
+  ctx.strokeStyle=dark?'rgba(255,255,255,0.22)':'rgba(0,80,200,0.25)';
+  ctx.lineWidth=1.5;
+  ctx.beginPath(); ctx.moveTo(0,30); ctx.lineTo(W,30); ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle=dark?'rgba(255,255,255,0.4)':'rgba(0,80,200,0.35)';
+  ctx.font='bold 9px Nunito, sans-serif';
+  ctx.textAlign='center';
+  ctx.fillText('✦  ESCAPE ZONE  ✦',W/2,21);
+
+  obstacles.forEach(o=>{if(o.alive)drawObstacle(o);});
+  drawBalloon(bx,by,dark);
+
+  /* progress bar */
+  ctx.fillStyle=dark?'rgba(255,255,255,0.05)':'rgba(0,0,0,0.06)';
+  ctx.fillRect(0,H-5,W,5);
+  const pct=(qIdx+1)/questions.length;
+  const grad=ctx.createLinearGradient(0,0,W*pct,0);
+  grad.addColorStop(0,'#2563eb');
+  grad.addColorStop(1,'#7c3aed');
+  ctx.fillStyle=grad;
+  ctx.fillRect(0,H-5,W*pct,5);
+}
+
+function drawCloud(x,y,scale,dark){
+  ctx.save();
+  ctx.globalAlpha=dark?0.06:0.45;
+  ctx.fillStyle='#fff';
+  const r=22*scale;
+  ctx.beginPath();
+  ctx.arc(x,y,r,0,Math.PI*2);
+  ctx.arc(x+r*1.1,y+r*0.22,r*0.72,0,Math.PI*2);
+  ctx.arc(x-r*0.88,y+r*0.22,r*0.62,0,Math.PI*2);
+  ctx.arc(x+r*0.28,y+r*0.52,r*0.78,0,Math.PI*2);
+  ctx.fill();
+  ctx.restore();
+}
+
+function drawObstacle(o){
+  ctx.save();
+  ctx.globalAlpha=o.alpha;
+  ctx.shadowColor='rgba(0,0,0,0.2)';
+  ctx.shadowBlur=8;
+  ctx.shadowOffsetY=3;
+  ctx.fillStyle=o.color;
+  ctx.strokeStyle='rgba(0,0,0,0.12)';
+  ctx.lineWidth=1.5;
+  const x=o.x,y=o.y,w=o.w,h=o.h;
+  ctx.beginPath();
+  if(o.shape==='circle') ctx.arc(x,y,Math.min(w,h)/2,0,Math.PI*2);
+  else if(o.shape==='diamond'){ctx.moveTo(x,y-h/2);ctx.lineTo(x+w/2,y);ctx.lineTo(x,y+h/2);ctx.lineTo(x-w/2,y);ctx.closePath();}
+  else ctx.roundRect(x-w/2,y-h/2,w,h,8);
+  ctx.fill(); ctx.stroke();
+  if(o.clearing){
+    ctx.shadowBlur=0;
+    ctx.globalAlpha=o.alpha*0.5;
+    ctx.strokeStyle=o.color;
+    ctx.lineWidth=3;
+    ctx.beginPath();
+    ctx.arc(x,y,(1-o.alpha)*Math.max(w,h)*0.9,0,Math.PI*2);
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+function drawBalloon(x,y,dark){
+  const r=bRadius;
+  ctx.save();
+  /* string */
+  ctx.strokeStyle=dark?'rgba(255,255,255,0.35)':'rgba(0,0,0,0.3)';
+  ctx.lineWidth=1.2;
+  ctx.beginPath(); ctx.moveTo(x,y+r); ctx.lineTo(x-3,y+r+22); ctx.stroke();
+  /* shadow */
+  ctx.globalAlpha=0.1;
+  ctx.fillStyle='#000';
+  ctx.beginPath(); ctx.ellipse(x,y+r+2,r*0.65,3.5,0,0,Math.PI*2); ctx.fill();
+  ctx.globalAlpha=1;
+  /* body */
+  ctx.fillStyle='#E8593C';
+  ctx.beginPath(); ctx.ellipse(x,y,r,r*1.2,0,0,Math.PI*2); ctx.fill();
+  /* shine */
+  ctx.fillStyle='rgba(255,255,255,0.3)';
+  ctx.beginPath(); ctx.ellipse(x-r*0.3,y-r*0.3,r*0.27,r*0.17,Math.PI/5,0,Math.PI*2); ctx.fill();
+  /* knot */
+  ctx.fillStyle='#9B3520';
+  ctx.beginPath(); ctx.arc(x,y+r*1.05,3.5,0,Math.PI*2); ctx.fill();
+  ctx.restore();
+}
+
+/* ═══════════════════════════════════════
+   QUESTION RENDERING & ANSWERS
+═══════════════════════════════════════ */
+function renderQuestion(idx){
+  const q=questions[idx];
+  document.getElementById('q-text').textContent=q.question;
+  const grid=document.getElementById('ans-grid');
+  grid.innerHTML='';
+  q.answers.forEach(ans=>{
+    const btn=document.createElement('button');
+    btn.className='ans-btn';
+    btn.textContent=ans;
+    btn.onclick=()=>handleAnswer(ans===q.correct,btn,q.correct);
+    grid.appendChild(btn);
+  });
+}
+
+function handleAnswer(isCorrect,btn,correctAns){
+  if(answered||gameOver)return;
+  answered=true;
+  document.querySelectorAll('.ans-btn').forEach(b=>{b.disabled=true;if(b.textContent===correctAns)b.classList.add('correct');});
+  const fb=document.getElementById('feedback');
+  if(isCorrect){
+    score+=100+qIdx*10; correctCount++;
+    document.getElementById('score').textContent=score;
+    btn.classList.add('correct');
+    fb.textContent='Correct! 💥 Obstacle cleared — balloon rising!';
+    fb.className='feedback c';
+    obstacles.forEach(o=>{if(o.alive&&!o.clearing)o.clearing=true;});
+    bVY=-1.6;
+  }else{
+    btn.classList.add('wrong');
+    fb.textContent='Not quite! Correct: '+correctAns+' — new obstacle incoming!';
+    fb.className='feedback w';
+    obstacles.forEach(o=>{if(o.alive&&!o.clearing)o.clearing=true;});
+    lives--; updateHearts();
+    if(lives<=0){endGame(false);return;}
+    by=Math.min(by+60,H-55);
+    bVY=levelParams(qIdx).balloonRise*0.5;
+    setTimeout(()=>{
+      if(!gameOver){
+        const p=levelParams(qIdx);
+        for(let i=0;i<p.obsCount;i++) spawnObstacle(p.baseSpeed,i,p.obsCount);
+        answered=false;
+        fb.className='feedback';
+        document.querySelectorAll('.ans-btn').forEach(b=>{b.disabled=false;b.classList.remove('correct','wrong');});
+      }
+    },1500);
+  }
+}
+
+function updateHearts(){
+  ['h1','h2','h3','h4','h5'].forEach((id,i)=>document.getElementById(id).classList.toggle('lost',i>=lives));
+}
+
+/* ═══════════════════════════════════════
+   END GAME
+═══════════════════════════════════════ */
+function endGame(won){
+  gameOver=true;
+  cancelAnimationFrame(raf);
+  const pct=questions.length>0?Math.round(correctCount/questions.length*100):0;
+  document.getElementById('end-emoji').textContent=won?'🎈':'💨';
+  document.getElementById('end-title').textContent=won?'You escaped!':'The balloon popped!';
+  document.getElementById('end-sub').textContent=won?'You beat all 9 levels! 🎉':"Don't give up — try again!";
+  document.getElementById('fin-score').textContent=score;
+  document.getElementById('fin-cor').textContent=correctCount+'/'+questions.length;
+  document.getElementById('fin-pct').textContent=pct+'%';
+  showScreen('end-screen');
+}
+</script>
+</body>
+</html>
