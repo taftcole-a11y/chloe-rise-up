@@ -677,14 +677,15 @@ function pickSubject(sub, el){
 /* ═══════════════════════════════════════════════════
    PASTE TEXT FLOW
 ═══════════════════════════════════════════════════ */
+function updateTextBtn(){
+  const btn=document.getElementById('text-submit-btn');
+  if(btn){ const ok=notesText.trim().length>20; btn.disabled=!ok; btn.style.opacity=ok?'1':'0.35'; btn.style.cursor=ok?'pointer':'default'; }
+}
 function handleTextInput(){
   notesText=document.getElementById('notes-text').value;
   document.getElementById('char-count').textContent=notesText.length;
-  const ok=notesText.trim().length>20;
-  const btn=document.getElementById('text-submit-btn');
-  btn.disabled=!ok;
-  // hide previous warning when user starts editing
   document.getElementById('text-warn').classList.remove('show');
+  updateTextBtn();
 }
 
 async function startFromText(){
@@ -753,25 +754,32 @@ function initGame(label){
   showScreen('game-screen');
 
   canvas=document.getElementById('gc');
-  resizeCanvas();
-  resetLevel(0);
-  if(raf) cancelAnimationFrame(raf);
-  raf=requestAnimationFrame(loop);
+  // Wait two frames so the DOM has fully laid out the canvas wrapper dimensions
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    resizeCanvas();
+    ctx=canvas.getContext('2d');
+    resetLevel(0);
+    if(raf) cancelAnimationFrame(raf);
+    raf=requestAnimationFrame(loop);
+  }));
 }
 
 function resizeCanvas(){
   const wrap=canvas.parentElement;
-  W=wrap.clientWidth;
-  H=wrap.clientHeight;
+  W=wrap.clientWidth||wrap.offsetWidth||460;
+  H=wrap.clientHeight||wrap.offsetHeight||480;
+  if(W<10) W=460;
+  if(H<10) H=480;
   canvas.width=W;
   canvas.height=H;
+  canvas.style.width='100%';
+  canvas.style.height='100%';
 }
 
-// Fix canvas on phone rotation
+// Fix canvas on phone rotation — only run if canvas and ctx are ready
 window.addEventListener('resize',()=>{
-  if(document.getElementById('game-screen').classList.contains('active')){
+  if(canvas && ctx && document.getElementById('game-screen').classList.contains('active')){
     resizeCanvas();
-    // reposition balloon safely
     bx=W/2;
     by=Math.min(by,H-55);
   }
@@ -824,7 +832,7 @@ function spawnObstacle(speed,idx,total){
   obstacles.push({x:fromLeft?-w:W+w,y,w,h,shape,color,vx:fromLeft?speed:-speed,alive:true,alpha:1,clearing:false,clearTimer:0});
 }
 
-function loop(){ if(gameOver)return; raf=requestAnimationFrame(loop); update(); drawScene(); }
+function loop(){ if(gameOver||!ctx)return; raf=requestAnimationFrame(loop); update(); drawScene(); }
 
 function update(){
   const p=levelParams(qIdx);
@@ -971,7 +979,7 @@ function handleAnswer(isCorrect,btn,correctAns){
     fb.textContent=randMsg(CORRECT_MSGS);
     fb.className='feedback c';
     obstacles.forEach(o=>{if(o.alive&&!o.clearing)o.clearing=true;});
-    bVY=-1.6;
+    bVY=-2.2;
   }else{
     btn.classList.add('wrong');
     fb.textContent=randMsg(WRONG_MSGS)+' Correct: '+correctAns;
