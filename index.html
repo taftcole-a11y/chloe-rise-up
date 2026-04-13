@@ -569,7 +569,10 @@ canvas { display: block; width: 100%; height: 100%; }
   <!-- PASTE TEXT TAB -->
   <div id="tab-text" class="tab-panel">
     <textarea class="text-area" id="notes-text" placeholder="Paste or type your notes here..." oninput="handleTextInput()"></textarea>
-    <div class="char-count"><span id="char-count">0</span> characters</div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+      <div class="char-count" style="margin-bottom:0;"><span id="char-count">0</span> characters</div>
+      <button id="text-submit-btn" onclick="startGame()" disabled style="padding:8px 16px;background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;border:none;border-radius:var(--radius);font-size:13px;font-weight:800;font-family:var(--font);cursor:pointer;opacity:0.35;transition:all 0.2s;white-space:nowrap;">✨ Let's Go!</button>
+    </div>
     <div class="info-box">⚡ Paste from Google Docs, websites, your notes app, etc. Requires internet.</div>
   </div>
 
@@ -768,7 +771,8 @@ function handleFile(e){ const f=e.target.files[0]; if(!f)return; readImg(f,'prev
 function readImg(file,pid,cb){ const r=new FileReader(); r.onload=ev=>{const s=ev.target.result;const i=document.getElementById(pid);if(i){i.src=s;i.style.display='block';}cb(s.split(',')[1]);}; r.readAsDataURL(file); }
 function handleImagePaste(e){ const items=(e.clipboardData||{}).items||[]; for(let it of items){if(it.type.startsWith('image/')){e.preventDefault();readImg(it.getAsFile(),'preview-paste-img',b64=>{pastedB64=b64;imageB64=null;notesText='';selSubject=null;aiTopic='';setStatus('Image pasted! ✓','ok');checkReady();});return;}} setStatus('No image found.','err'); }
 document.addEventListener('paste',e=>{if(activeTab==='tab-paste-img')handleImagePaste(e);});
-function handleTextInput(){ notesText=document.getElementById('notes-text').value; document.getElementById('char-count').textContent=notesText.length; if(notesText.trim().length>20){selSubject=null;setStatus('Notes ready! ✓','ok');}else setStatus(''); checkReady(); }
+function updateTextBtn(){ const btn=document.getElementById('text-submit-btn'); if(btn){const ok=notesText.trim().length>20; btn.disabled=!ok; btn.style.opacity=ok?'1':'0.35'; btn.style.cursor=ok?'pointer':'default';} }
+function handleTextInput(){ notesText=document.getElementById('notes-text').value; document.getElementById('char-count').textContent=notesText.length; if(notesText.trim().length>20){selSubject=null;setStatus('Notes ready! ✓','ok');}else setStatus(''); checkReady(); updateTextBtn(); }
 function pickSubject(sub,el){
   selSubject=sub; imageB64=null; pastedB64=null; notesText=''; aiTopic='';
   document.querySelectorAll('.subject-chip').forEach(c=>c.classList.remove('sel')); el.classList.add('sel');
