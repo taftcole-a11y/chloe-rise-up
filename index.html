@@ -18,12 +18,10 @@
   --text2: #8b949e;
   --text3: #6e7681;
   --accent: #58a6ff;
-  --accent2: #ff7b7b;
   --green: #3fb950;
   --green-bg: rgba(63,185,80,0.12);
   --red: #f85149;
   --red-bg: rgba(248,81,73,0.12);
-  --yellow: #d29922;
   --radius: 12px;
   --radius-lg: 18px;
   --font: 'Nunito', sans-serif;
@@ -41,7 +39,6 @@
     --text2: #555f6d;
     --text3: #8892a4;
     --accent: #2563eb;
-    --accent2: #dc2626;
     --green: #16a34a;
     --green-bg: rgba(22,163,74,0.1);
     --red: #dc2626;
@@ -64,372 +61,146 @@ html, body {
   min-height: 100vh;
 }
 
-/* ─── SCREENS ─── */
 .screen { display: none; }
 .screen.active { display: block; }
 
 /* ─── HEADER ─── */
-.game-title {
-  text-align: center;
-  margin-bottom: 2px;
-}
+.game-title { text-align: center; margin-bottom: 2px; }
 .game-title h1 {
-  font-size: 26px;
-  font-weight: 900;
+  font-size: 26px; font-weight: 900;
   background: linear-gradient(135deg, #58a6ff 0%, #a78bfa 50%, #f97316 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
   letter-spacing: -0.5px;
 }
-.game-title p {
-  font-size: 12px;
-  color: var(--text2);
-  font-family: var(--font-body);
-  margin-top: 2px;
-}
+.game-title p { font-size: 12px; color: var(--text2); font-family: var(--font-body); margin-top: 2px; }
 
 /* ─── TABS ─── */
 .tabs {
-  display: flex;
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  overflow: hidden;
-  margin: 14px 0 12px;
-  flex-wrap: wrap;
+  display: flex; background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--radius); overflow: hidden; margin: 14px 0 12px;
 }
 .tab-btn {
-  flex: 1;
-  min-width: 52px;
-  padding: 9px 4px;
-  font-size: 10.5px;
-  font-weight: 700;
-  font-family: var(--font);
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  color: var(--text2);
-  transition: all 0.18s;
-  text-align: center;
-  line-height: 1.3;
-  letter-spacing: 0.01em;
+  flex: 1; padding: 10px 4px; font-size: 11px; font-weight: 700; font-family: var(--font);
+  border: none; background: transparent; cursor: pointer; color: var(--text2);
+  transition: all 0.18s; text-align: center; line-height: 1.3;
 }
-.tab-btn.active {
-  background: var(--accent);
-  color: #fff;
-}
+.tab-btn.active { background: var(--accent); color: #fff; }
 .tab-btn:hover:not(.active) { background: var(--bg3); color: var(--text); }
-
 .tab-panel { display: none; }
 .tab-panel.active { display: block; }
 
 /* ─── SUBJECT CHIPS ─── */
-.tab-intro {
-  font-size: 12px;
-  color: var(--text2);
-  font-family: var(--font-body);
-  text-align: center;
-  margin-bottom: 10px;
-}
-.subject-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 8px;
-  margin-bottom: 12px;
-}
+.tab-intro { font-size: 12px; color: var(--text2); font-family: var(--font-body); text-align: center; margin-bottom: 10px; }
+.subject-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 12px; }
 .subject-chip {
-  padding: 10px 6px;
-  border-radius: var(--radius);
-  font-size: 12px;
-  font-weight: 700;
-  font-family: var(--font);
-  border: 1.5px solid var(--border);
-  cursor: pointer;
-  background: var(--bg2);
-  color: var(--text2);
-  transition: all 0.18s;
-  text-align: center;
-  line-height: 1.3;
+  padding: 10px 6px; border-radius: var(--radius); font-size: 11.5px; font-weight: 700;
+  font-family: var(--font); border: 1.5px solid var(--border); cursor: pointer;
+  background: var(--bg2); color: var(--text2); transition: all 0.18s; text-align: center; line-height: 1.3;
 }
 .subject-chip:hover, .subject-chip.sel {
-  border-color: var(--accent);
-  background: rgba(88,166,255,0.1);
-  color: var(--accent);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(88,166,255,0.2);
+  border-color: var(--accent); background: rgba(88,166,255,0.1); color: var(--accent);
+  transform: translateY(-1px); box-shadow: 0 4px 12px rgba(88,166,255,0.2);
 }
 
-/* ─── AI TAB ─── */
-.field-label {
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--text2);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  margin-bottom: 6px;
-}
-.ai-input {
-  width: 100%;
-  padding: 10px 13px;
-  border: 1.5px solid var(--border2);
-  border-radius: var(--radius);
-  font-size: 13px;
-  font-family: var(--font-body);
-  color: var(--text);
-  background: var(--bg2);
-  outline: none;
-  margin-bottom: 10px;
-  transition: border-color 0.15s;
-}
-.ai-input:focus { border-color: var(--accent); }
-.ai-input::placeholder { color: var(--text3); }
-.topic-chips {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-  margin-bottom: 12px;
-}
-.topic-chip {
-  padding: 5px 10px;
-  border-radius: 20px;
-  font-size: 11px;
-  font-weight: 700;
-  font-family: var(--font);
-  border: 1px solid var(--border2);
-  cursor: pointer;
-  background: var(--bg2);
-  color: var(--text2);
-  transition: all 0.15s;
-}
-.topic-chip:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-  background: rgba(88,166,255,0.08);
-}
-.diff-row { display: flex; gap: 6px; margin-bottom: 4px; }
-.diff-btn {
-  flex: 1;
-  padding: 8px;
-  border-radius: var(--radius);
-  font-size: 12px;
-  font-weight: 700;
-  font-family: var(--font);
-  border: 1.5px solid var(--border);
-  cursor: pointer;
-  background: var(--bg2);
-  color: var(--text2);
-  transition: all 0.18s;
-  text-align: center;
-}
-.diff-btn.sel {
-  background: var(--accent);
-  color: #fff;
-  border-color: var(--accent);
-}
-
-/* ─── DROP ZONES ─── */
-.drop-zone {
-  border: 2px dashed var(--border2);
-  border-radius: var(--radius-lg);
-  padding: 20px;
-  cursor: pointer;
-  background: var(--bg2);
-  text-align: center;
-  outline: none;
-  transition: all 0.2s;
-  margin-bottom: 10px;
-}
-.drop-zone:hover, .drop-zone:focus { border-color: var(--accent); background: rgba(88,166,255,0.05); }
-.drop-zone input[type=file] { display: none; }
-.dz-icon { font-size: 28px; margin-bottom: 6px; }
-.dz-text { font-size: 13px; font-weight: 700; }
-.dz-sub { font-size: 11px; color: var(--text2); margin-top: 3px; font-family: var(--font-body); }
-.preview-img { max-height: 110px; border-radius: 8px; margin: 10px auto 0; display: block; max-width: 100%; }
-
-/* ─── TEXT AREA ─── */
+/* ─── PASTE TEXT ─── */
+.field-label { font-size: 11px; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
 .text-area {
-  width: 100%;
-  min-height: 100px;
-  padding: 10px 13px;
-  border: 1.5px solid var(--border2);
-  border-radius: var(--radius);
-  font-size: 13px;
-  font-family: var(--font-body);
-  color: var(--text);
-  background: var(--bg2);
-  resize: vertical;
-  outline: none;
-  line-height: 1.5;
-  margin-bottom: 4px;
+  width: 100%; min-height: 110px; padding: 10px 13px; border: 1.5px solid var(--border2);
+  border-radius: var(--radius); font-size: 13px; font-family: var(--font-body); color: var(--text);
+  background: var(--bg2); resize: vertical; outline: none; line-height: 1.5; margin-bottom: 4px;
   transition: border-color 0.15s;
 }
 .text-area:focus { border-color: var(--accent); }
-.char-count { font-size: 11px; color: var(--text3); text-align: right; margin-bottom: 8px; font-family: var(--font-body); }
+.char-count { font-size: 11px; color: var(--text3); font-family: var(--font-body); }
 
-/* ─── INFO BOX ─── */
+/* ─── INFO / WARNING BOXES ─── */
 .info-box {
-  background: var(--bg3);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 9px 12px;
-  font-size: 11.5px;
-  font-family: var(--font-body);
-  color: var(--text2);
-  margin-bottom: 10px;
-  line-height: 1.5;
+  background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 9px 12px; font-size: 11.5px; font-family: var(--font-body); color: var(--text2);
+  margin-bottom: 10px; line-height: 1.5;
 }
+.warn-box {
+  background: rgba(248,81,73,0.08); border: 1px solid rgba(248,81,73,0.25); border-radius: var(--radius);
+  padding: 9px 12px; font-size: 11.5px; font-family: var(--font-body); color: var(--red);
+  margin-top: 8px; line-height: 1.5; display: none;
+}
+.warn-box.show { display: block; }
 
-/* ─── MAIN BUTTON ─── */
+/* ─── BUTTONS ─── */
 .btn-main {
-  display: block;
-  width: 100%;
-  padding: 13px;
+  display: block; width: 100%; padding: 13px;
   background: linear-gradient(135deg, #2563eb, #7c3aed);
-  color: #fff;
-  border: none;
-  border-radius: var(--radius);
-  font-size: 15px;
-  font-weight: 800;
-  font-family: var(--font);
-  cursor: pointer;
-  transition: all 0.2s;
-  letter-spacing: 0.02em;
-  box-shadow: 0 4px 16px rgba(37,99,235,0.35);
+  color: #fff; border: none; border-radius: var(--radius);
+  font-size: 15px; font-weight: 800; font-family: var(--font); cursor: pointer;
+  transition: all 0.2s; letter-spacing: 0.02em; box-shadow: 0 4px 16px rgba(37,99,235,0.35);
 }
 .btn-main:disabled { opacity: 0.3; cursor: default; box-shadow: none; }
 .btn-main:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(37,99,235,0.45); }
-
-/* ─── STATUS ─── */
-.status {
-  font-size: 12px;
-  font-family: var(--font-body);
-  color: var(--text2);
-  text-align: center;
-  margin-top: 8px;
-  min-height: 16px;
+.btn-inline {
+  flex-shrink: 0; padding: 8px 16px;
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  color: #fff; border: none; border-radius: var(--radius);
+  font-size: 13px; font-weight: 800; font-family: var(--font);
+  cursor: pointer; opacity: 0.35; transition: all 0.2s; white-space: nowrap;
 }
-.status.err { color: var(--red); }
-.status.ok { color: var(--green); }
+.btn-inline:not(:disabled) { opacity: 1; }
+.btn-inline:disabled { opacity: 0.35; cursor: default; }
 
 /* ─── LOADING ─── */
 #load-screen { text-align: center; padding: 60px 0; }
 .spinner {
-  width: 40px; height: 40px;
-  border: 3px solid var(--border2);
-  border-top-color: var(--accent);
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-  margin: 0 auto 16px;
+  width: 40px; height: 40px; border: 3px solid var(--border2); border-top-color: var(--accent);
+  border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 16px;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 .load-text { font-size: 16px; font-weight: 800; }
 .load-sub { font-size: 12px; color: var(--text2); margin-top: 5px; font-family: var(--font-body); }
 
 /* ─── GAME HUD ─── */
-.game-hud {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
-  gap: 6px;
-}
-.hud-pill {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 5px 12px;
-  font-size: 12px;
-  font-weight: 700;
-}
+.game-hud { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; gap: 6px; }
+.hud-pill { background: var(--bg2); border: 1px solid var(--border); border-radius: 20px; padding: 5px 12px; font-size: 12px; font-weight: 700; }
 .hearts { display: flex; gap: 3px; align-items: center; }
 .heart { font-size: 15px; transition: all 0.3s; }
 .heart.lost { opacity: 0.15; transform: scale(0.8); }
 
 /* ─── CANVAS ─── */
 #canvas-wrap {
-  width: 100%;
-  height: 480px;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  border: 1px solid var(--border);
-  margin-bottom: 10px;
-  position: relative;
+  width: 100%; height: 480px; border-radius: var(--radius-lg); overflow: hidden;
+  border: 1px solid var(--border); margin-bottom: 10px; position: relative;
   box-shadow: 0 8px 32px rgba(0,0,0,0.3);
 }
 canvas { display: block; width: 100%; height: 100%; }
 
 /* ─── QUESTION CARD ─── */
 .q-card {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 13px;
-  margin-bottom: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-lg);
+  padding: 13px; margin-bottom: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
 .q-label {
-  font-size: 10px;
-  font-weight: 700;
-  color: var(--text3);
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
-  margin-bottom: 6px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  font-size: 10px; font-weight: 700; color: var(--text3); text-transform: uppercase;
+  letter-spacing: 0.07em; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center;
 }
 .level-badge {
-  font-size: 10px;
-  font-weight: 800;
-  padding: 2px 9px;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #2563eb22, #7c3aed22);
-  color: var(--accent);
+  font-size: 10px; font-weight: 800; padding: 2px 9px; border-radius: 10px;
+  background: linear-gradient(135deg, #2563eb22, #7c3aed22); color: var(--accent);
   border: 1px solid rgba(88,166,255,0.2);
 }
-.q-text {
-  font-size: 14px;
-  font-weight: 700;
-  margin-bottom: 10px;
-  line-height: 1.5;
-  color: var(--text);
-}
+.q-text { font-size: 14px; font-weight: 700; margin-bottom: 10px; line-height: 1.5; color: var(--text); }
 .ans-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
 .ans-btn {
-  background: var(--bg);
-  border: 1.5px solid var(--border2);
-  border-radius: var(--radius);
-  padding: 10px 10px;
-  font-size: 12px;
-  font-weight: 700;
-  font-family: var(--font);
-  cursor: pointer;
-  text-align: left;
-  line-height: 1.4;
-  color: var(--text);
-  transition: all 0.15s;
+  background: var(--bg); border: 1.5px solid var(--border2); border-radius: var(--radius);
+  padding: 10px; font-size: 12px; font-weight: 700; font-family: var(--font);
+  cursor: pointer; text-align: left; line-height: 1.4; color: var(--text); transition: all 0.15s;
 }
-.ans-btn:hover:not(:disabled) {
-  background: var(--bg3);
-  border-color: var(--accent);
-  color: var(--accent);
-  transform: translateY(-1px);
-}
+.ans-btn:hover:not(:disabled) { background: var(--bg3); border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
 .ans-btn.correct { background: var(--green-bg); border-color: var(--green); color: var(--green); }
 .ans-btn.wrong { background: var(--red-bg); border-color: var(--red); color: var(--red); }
 .ans-btn:disabled { cursor: default; transform: none; }
 
 /* ─── FEEDBACK ─── */
 .feedback {
-  border-radius: var(--radius);
-  padding: 10px 13px;
-  font-size: 12.5px;
-  font-family: var(--font-body);
-  margin-bottom: 8px;
-  display: none;
-  line-height: 1.5;
-  font-weight: 600;
+  border-radius: var(--radius); padding: 10px 13px; font-size: 12.5px; font-family: var(--font-body);
+  margin-bottom: 8px; display: none; line-height: 1.5; font-weight: 600;
   animation: fadeUp 0.25s ease;
 }
 @keyframes fadeUp { from { opacity:0; transform:translateY(4px); } to { opacity:1; transform:none; } }
@@ -443,50 +214,30 @@ canvas { display: block; width: 100%; height: 100%; }
 .end-title { font-size: 26px; font-weight: 900; margin-bottom: 5px; letter-spacing: -0.5px; }
 .end-sub { font-size: 13px; font-family: var(--font-body); color: var(--text2); margin-bottom: 22px; }
 .stat-row { display: flex; gap: 10px; justify-content: center; margin-bottom: 24px; }
-.stat-box {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 14px 22px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-}
+.stat-box { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 14px 22px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
 .stat-n { font-size: 26px; font-weight: 900; }
 .stat-l { font-size: 11px; font-family: var(--font-body); color: var(--text2); margin-top: 2px; }
 .btn-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-.btn-sec {
-  background: var(--bg2);
-  border: 1.5px solid var(--border2);
-  border-radius: var(--radius);
-  padding: 10px 20px;
-  font-size: 13px;
-  font-weight: 700;
-  font-family: var(--font);
-  cursor: pointer;
-  color: var(--text);
-  transition: all 0.15s;
-}
-.btn-sec:hover { background: var(--bg3); border-color: var(--accent); color: var(--accent); }
 .btn-play-again {
-  padding: 11px 28px;
-  background: linear-gradient(135deg, #2563eb, #7c3aed);
-  color: #fff;
-  border: none;
-  border-radius: var(--radius);
-  font-size: 14px;
-  font-weight: 800;
-  font-family: var(--font);
-  cursor: pointer;
-  transition: all 0.2s;
-  box-shadow: 0 4px 14px rgba(37,99,235,0.35);
+  padding: 11px 28px; background: linear-gradient(135deg, #2563eb, #7c3aed); color: #fff;
+  border: none; border-radius: var(--radius); font-size: 14px; font-weight: 800; font-family: var(--font);
+  cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 14px rgba(37,99,235,0.35);
 }
 .btn-play-again:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(37,99,235,0.45); }
+.btn-sec {
+  background: var(--bg2); border: 1.5px solid var(--border2); border-radius: var(--radius);
+  padding: 10px 20px; font-size: 13px; font-weight: 700; font-family: var(--font);
+  cursor: pointer; color: var(--text); transition: all 0.15s;
+}
+.btn-sec:hover { background: var(--bg3); border-color: var(--accent); color: var(--accent); }
 </style>
 </head>
 <body>
-
 <div id="app">
 
-<!-- ── UPLOAD / HOME SCREEN ── -->
+<!-- ══════════════════════════════════════
+     HOME SCREEN
+══════════════════════════════════════ -->
 <div id="upload-screen" class="screen active">
   <div class="game-title">
     <h1>🎈 Rise Up! Study</h1>
@@ -495,99 +246,56 @@ canvas { display: block; width: 100%; height: 100%; }
 
   <div class="tabs">
     <button class="tab-btn active" onclick="switchTab('tab-subject',this)">📚 Subjects</button>
-    <button class="tab-btn" onclick="switchTab('tab-ai',this)">✨ Ask AI</button>
-    <button class="tab-btn" onclick="switchTab('tab-photo',this)">📸 Photo</button>
-    <button class="tab-btn" onclick="switchTab('tab-paste-img',this)">🖼️ Paste Img</button>
-    <button class="tab-btn" onclick="switchTab('tab-text',this)">📋 Paste Text</button>
+    <button class="tab-btn" onclick="switchTab('tab-text',this)">📋 Paste Notes</button>
   </div>
 
-  <!-- SUBJECTS TAB -->
+  <!-- ── SUBJECTS TAB ── -->
   <div id="tab-subject" class="tab-panel active">
-    <div class="tab-intro">Pick a subject — works instantly, no internet needed:</div>
+    <div class="tab-intro">Pick a subject — works instantly, no internet needed! ✅</div>
     <div class="subject-grid">
-      <div class="subject-chip" onclick="pickSubject('romans',this)">📖<br>Romans 1-8</div>
+      <div class="subject-chip" onclick="pickSubject('romans',this)">📖<br>Romans 1–8</div>
+      <div class="subject-chip" onclick="pickSubject('romans9',this)">📖<br>Romans 9–16</div>
+      <div class="subject-chip" onclick="pickSubject('proverbs',this)">✨<br>Proverbs</div>
       <div class="subject-chip" onclick="pickSubject('algebra',this)">🔢<br>Algebra 1</div>
+      <div class="subject-chip" onclick="pickSubject('geometry',this)">📐<br>Geometry</div>
       <div class="subject-chip" onclick="pickSubject('science',this)">🔬<br>Science</div>
-      <div class="subject-chip" onclick="pickSubject('history',this)">🏛️<br>History</div>
+      <div class="subject-chip" onclick="pickSubject('biology',this)">🧬<br>Biology</div>
+      <div class="subject-chip" onclick="pickSubject('history',this)">🏛️<br>US History</div>
       <div class="subject-chip" onclick="pickSubject('geography',this)">🌍<br>Geography</div>
       <div class="subject-chip" onclick="pickSubject('ela',this)">✏️<br>ELA</div>
+      <div class="subject-chip" onclick="pickSubject('vocab',this)">💬<br>Vocabulary</div>
+      <div class="subject-chip" onclick="pickSubject('mixed',this)">🎲<br>Mixed Quiz</div>
     </div>
   </div>
 
-  <!-- AI TAB -->
-  <div id="tab-ai" class="tab-panel">
-    <div class="field-label">What do you want to study?</div>
-    <div style="display:flex;gap:8px;margin-bottom:10px;">
-      <input class="ai-input" id="topic-input" placeholder="e.g. solving inequalities, the Civil War, photosynthesis..." oninput="handleTopicInput()" onkeydown="if(event.key==='Enter')startGame()" style="margin-bottom:0;flex:1;">
-      <button id="ai-submit-btn" onclick="startGame()" disabled style="flex-shrink:0;padding:0 16px;background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;border:none;border-radius:var(--radius);font-size:13px;font-weight:800;font-family:var(--font);cursor:pointer;opacity:0.35;transition:all 0.2s;white-space:nowrap;" title="Generate questions">✨ Go!</button>
-    </div>
-    <div class="field-label">Quick picks:</div>
-    <div class="topic-chips">
-      <div class="topic-chip" onclick="setTopic('Solving equations and inequalities')">Solving equations</div>
-      <div class="topic-chip" onclick="setTopic('Slope and linear equations')">Slope</div>
-      <div class="topic-chip" onclick="setTopic('Systems of equations')">Systems of equations</div>
-      <div class="topic-chip" onclick="setTopic('Polynomials and factoring')">Polynomials</div>
-      <div class="topic-chip" onclick="setTopic('The American Revolution')">American Revolution</div>
-      <div class="topic-chip" onclick="setTopic('Cell biology and organelles')">Cell biology</div>
-      <div class="topic-chip" onclick="setTopic('World War II')">World War II</div>
-      <div class="topic-chip" onclick="setTopic('Literary devices')">Literary devices</div>
-      <div class="topic-chip" onclick="setTopic('The Solar System')">Solar System</div>
-      <div class="topic-chip" onclick="setTopic('Human body systems')">Human body</div>
-    </div>
-    <div class="field-label">Difficulty:</div>
-    <div class="diff-row" style="margin-bottom:10px;">
-      <div class="diff-btn sel" onclick="setDiff('easy',this)">😊 Easy</div>
-      <div class="diff-btn" onclick="setDiff('medium',this)">🤔 Medium</div>
-      <div class="diff-btn" onclick="setDiff('hard',this)">🔥 Hard</div>
-    </div>
-    <div class="info-box">⚡ Requires internet connection to generate questions.</div>
-  </div>
-
-  <!-- PHOTO TAB -->
-  <div id="tab-photo" class="tab-panel">
-    <div class="drop-zone" onclick="document.getElementById('file-in').click()">
-      <input type="file" id="file-in" accept="image/*" onchange="handleFile(event)">
-      <div class="dz-icon">📸</div>
-      <div class="dz-text">Tap to upload a photo of your notes</div>
-      <div class="dz-sub">JPG, PNG, HEIC supported</div>
-      <img id="preview-photo" class="preview-img" style="display:none">
-    </div>
-    <div class="info-box">⚡ AI reads your notes and creates questions. Requires internet.</div>
-  </div>
-
-  <!-- PASTE IMAGE TAB -->
-  <div id="tab-paste-img" class="tab-panel">
-    <div class="drop-zone" id="paste-img-zone" tabindex="0" onclick="this.focus()" onpaste="handleImagePaste(event)">
-      <div class="dz-icon">🖼️</div>
-      <div class="dz-text">Click here, then paste an image</div>
-      <div class="dz-sub">Right-click any image → Copy Image → Ctrl+V / Cmd+V</div>
-      <img id="preview-paste-img" class="preview-img" style="display:none">
-    </div>
-    <div class="info-box">⚡ Works with screenshots too! Requires internet.</div>
-  </div>
-
-  <!-- PASTE TEXT TAB -->
+  <!-- ── PASTE TEXT TAB ── -->
   <div id="tab-text" class="tab-panel">
-    <textarea class="text-area" id="notes-text" placeholder="Paste or type your notes here..." oninput="handleTextInput()"></textarea>
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-      <div class="char-count" style="margin-bottom:0;"><span id="char-count">0</span> characters</div>
-      <button id="text-submit-btn" onclick="startGame()" disabled style="padding:8px 16px;background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;border:none;border-radius:var(--radius);font-size:13px;font-weight:800;font-family:var(--font);cursor:pointer;opacity:0.35;transition:all 0.2s;white-space:nowrap;">✨ Let's Go!</button>
+    <div class="field-label">Paste your notes below</div>
+    <textarea class="text-area" id="notes-text" placeholder="Paste notes from Google Docs, your class, a website, anywhere... AI will turn them into questions!" oninput="handleTextInput()"></textarea>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+      <div class="char-count"><span id="char-count">0</span> characters</div>
+      <button id="text-submit-btn" class="btn-inline" onclick="startFromText()" disabled>✨ Let's Go!</button>
     </div>
-    <div class="info-box">⚡ Paste from Google Docs, websites, your notes app, etc. Requires internet.</div>
+    <div class="info-box">📡 This tab uses AI to generate questions from your notes. Requires an internet connection.</div>
+    <div class="warn-box" id="text-warn"></div>
   </div>
 
   <button class="btn-main" id="go-btn" onclick="startGame()" disabled style="margin-top:6px;">🚀 Let's Play!</button>
-  <div class="status" id="up-status"></div>
+  <div style="font-size:12px;color:var(--text2);font-family:var(--font-body);text-align:center;margin-top:8px;min-height:16px;" id="up-status"></div>
 </div>
 
-<!-- ── LOADING ── -->
+<!-- ══════════════════════════════════════
+     LOADING SCREEN
+══════════════════════════════════════ -->
 <div id="load-screen" class="screen">
   <div class="spinner"></div>
-  <div class="load-text" id="load-text">Generating questions...</div>
-  <div class="load-sub">AI is building your quiz ✨</div>
+  <div class="load-text">Generating questions...</div>
+  <div class="load-sub">AI is building your quiz from your notes ✨</div>
 </div>
 
-<!-- ── GAME SCREEN ── -->
+<!-- ══════════════════════════════════════
+     GAME SCREEN
+══════════════════════════════════════ -->
 <div id="game-screen" class="screen">
   <div class="game-hud">
     <div class="hud-pill">Q <b id="q-num">1</b>/<b id="q-tot">9</b></div>
@@ -612,7 +320,9 @@ canvas { display: block; width: 100%; height: 100%; }
   <div class="feedback" id="feedback"></div>
 </div>
 
-<!-- ── END SCREEN ── -->
+<!-- ══════════════════════════════════════
+     END SCREEN
+══════════════════════════════════════ -->
 <div id="end-screen" class="screen">
   <div class="end-emoji" id="end-emoji">🎈</div>
   <div class="end-title" id="end-title">You escaped!</div>
@@ -631,14 +341,15 @@ canvas { display: block; width: 100%; height: 100%; }
 </div><!-- /app -->
 
 <script>
-/* ═══════════════════════════════════════
+/* ═══════════════════════════════════════════════════
    QUESTION BANKS
-═══════════════════════════════════════ */
+═══════════════════════════════════════════════════ */
 const BANKS = {
+
   romans:[
     {q:"Who wrote the book of Romans?",a:"Paul",w:["Peter","James","Luke"]},
     {q:"Who is Romans written to?",a:"Christians in Rome",w:["Christians in Corinth","The Jews in Jerusalem","The disciples"]},
-    {q:"Romans 3:23 says all have…",a:"Sinned and fall short of God's glory",w:["Been forgiven by God","A purpose in life","The Holy Spirit"]},
+    {q:"Romans 3:23 — all have…",a:"Sinned and fall short of God's glory",w:["Been forgiven by God","A purpose in life","The Holy Spirit"]},
     {q:"Romans 6:23 — the wages of sin is…",a:"Death",w:["Sadness","Punishment","Loneliness"]},
     {q:"Romans 5:8 — God shows love by…",a:"Christ dying for us while we were sinners",w:["Giving us the Bible","Creating the world","Sending angels"]},
     {q:"Justification in Romans 5:1 comes through…",a:"Faith",w:["Good deeds","The law","Prayer"]},
@@ -651,14 +362,57 @@ const BANKS = {
     {q:"Romans 8:15 — we received a spirit of…",a:"Adoption as sons",w:["Fear and trembling","Judgment","The old law"]},
     {q:"Romans 8:31 — if God is for us…",a:"Who can be against us?",w:["We have nothing to fear","We will never suffer","We are perfect"]},
     {q:"Romans 7 describes a struggle between…",a:"Wanting good but doing sin",w:["Jews and Gentiles","Faith and works","Heaven and earth"]},
-    {q:"Romans 8:26 — the Spirit intercedes when…",a:"We don't know what to pray",w:["We sin","We feel alone","We read Scripture"]},
+    {q:"Romans 8:26 — the Spirit helps when…",a:"We don't know what to pray",w:["We sin","We feel alone","We read Scripture"]},
     {q:"Romans 6:4 — buried with Christ through…",a:"Baptism",w:["Prayer","Good works","Faith alone"]},
     {q:"In Romans 3, both Jews and Gentiles are…",a:"Under sin",w:["Saved already","Chosen by God","Equal before the law"]},
   ],
+
+  romans9:[
+    {q:"Romans 9 opens with Paul expressing great…",a:"Sorrow for Israel",w:["Joy for the Gentiles","Anger at sin","Praise for the law"]},
+    {q:"Romans 9 — not all who are descended from Israel are…",a:"True Israel",w:["Saved","Righteous","Called"]},
+    {q:"Romans 9:15 — God says He will have mercy on…",a:"Whom He will have mercy",w:["Those who earn it","The righteous only","Those who ask"]},
+    {q:"Romans 10:9 — if you confess Jesus is Lord and believe God raised him…",a:"You will be saved",w:["You are righteous","You are chosen","You are baptized"]},
+    {q:"Romans 10:17 — faith comes from…",a:"Hearing the word of Christ",w:["Good works","Prayer alone","Church attendance"]},
+    {q:"Romans 11 — God has not rejected…",a:"His people Israel",w:["The Gentiles","The sinners","The apostles"]},
+    {q:"Romans 11 describes Gentiles as a…",a:"Wild olive branch grafted in",w:["Root of the tree","Fallen branch","New tree"]},
+    {q:"Romans 12:1 — offer your bodies as…",a:"A living sacrifice",w:["A burnt offering","A peace offering","A grain offering"]},
+    {q:"Romans 12:2 — do not conform to…",a:"The pattern of this world",w:["The law of Moses","The church's rules","The Gentile ways"]},
+    {q:"Romans 13 — governing authorities are…",a:"Established by God",w:["Enemies of the church","To be ignored","Chosen by people only"]},
+    {q:"Romans 13:10 — love is the fulfillment of…",a:"The law",w:["Prophecy","Prayer","Sacrifice"]},
+    {q:"Romans 14 warns against…",a:"Judging a fellow believer on disputable matters",w:["Eating with sinners","Praying too little","Going to the temple"]},
+    {q:"Romans 15:13 — Paul calls God the God of…",a:"Hope",w:["Justice","Power","Wrath"]},
+    {q:"Romans 16 ends with Paul…",a:"Greeting many believers by name",w:["Warning of false prophets","Describing heaven","Explaining baptism"]},
+    {q:"Romans 10:13 — everyone who calls on the name of the Lord will be…",a:"Saved",w:["Blessed","Chosen","Forgiven only"]},
+    {q:"Romans 12:18 — as far as it depends on you…",a:"Live at peace with everyone",w:["Obey the government","Serve the church","Share your faith"]},
+    {q:"Romans 15:4 — Scripture was written to give us…",a:"Hope through endurance",w:["Laws to follow","Warnings of judgment","Stories to entertain"]},
+    {q:"Romans 12:21 — overcome evil with…",a:"Good",w:["Prayer","Strength","Patience"]},
+  ],
+
+  proverbs:[
+    {q:"Proverbs 1:7 — the beginning of wisdom is…",a:"Fear of the Lord",w:["Knowledge of Scripture","Love of neighbor","Good deeds"]},
+    {q:"Who is traditionally credited with writing most of Proverbs?",a:"King Solomon",w:["King David","Moses","Isaiah"]},
+    {q:"Proverbs 3:5 — trust in the Lord with all your heart and lean not on…",a:"Your own understanding",w:["Your strength","Your wealth","Your friends"]},
+    {q:"Proverbs 3:6 — in all your ways acknowledge Him and He will…",a:"Make your paths straight",w:["Give you riches","Remove your enemies","Grant you long life"]},
+    {q:"Proverbs 16:18 — what comes before a fall?",a:"Pride",w:["Laziness","Envy","Anger"]},
+    {q:"Proverbs 22:6 — train up a child in the way they should go and…",a:"When old they will not depart from it",w:["They will be blessed","God will protect them","They will become wise"]},
+    {q:"Proverbs 4:7 — wisdom is supreme, therefore…",a:"Get wisdom",w:["Fear God","Love your neighbor","Obey your parents"]},
+    {q:"Proverbs 17:17 — a friend loves…",a:"At all times",w:["When it is easy","Only the righteous","Those who give gifts"]},
+    {q:"Proverbs 10:1 — a wise son brings joy to…",a:"His father",w:["His mother","His teacher","His king"]},
+    {q:"Proverbs 15:1 — a gentle answer turns away…",a:"Wrath",w:["Enemies","Trouble","Fear"]},
+    {q:"Proverbs 12:22 — the Lord detests…",a:"Lying lips",w:["Lazy hands","Proud eyes","Evil deeds"]},
+    {q:"Proverbs 6 warns against becoming a guarantor for…",a:"A neighbor's debt",w:["A stranger's sin","A brother's enemy","A king's promise"]},
+    {q:"Proverbs 31 describes a wife of…",a:"Noble character",w:["Great beauty","Much wealth","Royal birth"]},
+    {q:"Proverbs 13:20 — walk with the wise and you will be…",a:"Wise",w:["Blessed","Saved","Righteous"]},
+    {q:"Proverbs 11:2 — with humility comes…",a:"Wisdom",w:["Wealth","Fame","Strength"]},
+    {q:"Proverbs 18:10 — the name of the Lord is a…",a:"Fortified tower",w:["Gentle river","Burning fire","Strong shield"]},
+    {q:"Proverbs 23:7 — as a person thinks in their heart…",a:"So they are",w:["So they speak","So they act","So they worship"]},
+    {q:"Proverbs 14:12 — there is a way that appears right but leads to…",a:"Death",w:["Foolishness","Poverty","Shame"]},
+  ],
+
   algebra:[
     {q:"Solve: 2x + 5 = 13",a:"x = 4",w:["x = 3","x = 9","x = 6"]},
     {q:"Solve: 3x − 7 = 11",a:"x = 6",w:["x = 4","x = 8","x = 3"]},
-    {q:"Which satisfies 4x + 2 > 18?",a:"x = 5",w:["x = 3","x = 4","x = 2"]},
+    {q:"Which value satisfies 4x + 2 > 18?",a:"x = 5",w:["x = 3","x = 4","x = 2"]},
     {q:"Slope of y = 3x − 7?",a:"3",w:["-7","7","-3"]},
     {q:"Slope between (2,4) and (6,12)?",a:"2",w:["3","4","½"]},
     {q:"What form is y = mx + b?",a:"Slope-intercept form",w:["Standard form","Point-slope form","Vertex form"]},
@@ -666,37 +420,100 @@ const BANKS = {
     {q:"Factor: x² + 5x + 6",a:"(x+2)(x+3)",w:["(x+1)(x+6)","(x+5)(x+1)","(x−2)(x−3)"]},
     {q:"Degree of 4x³ + 2x − 7?",a:"3",w:["1","2","4"]},
     {q:"Simplify: (x+3)(x−3)",a:"x² − 9",w:["x² + 9","x² − 6x + 9","x² + 6x − 9"]},
-    {q:"Two-term polynomial is called?",a:"Binomial",w:["Monomial","Trinomial","Quadratic"]},
+    {q:"A two-term polynomial is called a…",a:"Binomial",w:["Monomial","Trinomial","Quadratic"]},
     {q:"Solve: −2x + 8 = 2",a:"x = 3",w:["x = 5","x = −3","x = 4"]},
     {q:"y-intercept of y = 4x + 9?",a:"9",w:["4","−9","0"]},
-    {q:"Adding equations to cancel a variable is?",a:"Elimination",w:["Substitution","Graphing","Factoring"]},
+    {q:"Adding equations to eliminate a variable is…",a:"Elimination",w:["Substitution","Graphing","Factoring"]},
     {q:"Solve: 5(x−2) = 20",a:"x = 6",w:["x = 4","x = 8","x = 2"]},
     {q:"Slope of a horizontal line?",a:"0",w:["1","Undefined","−1"]},
     {q:"Factor GCF: 6x² + 9x",a:"3x(2x+3)",w:["3(2x²+3x)","6x(x+9)","9x(x+6)"]},
     {q:"Solutions of x² − 9 = 0?",a:"x = 3 and x = −3",w:["x = 9","x = 3 only","x = −9"]},
   ],
+
+  geometry:[
+    {q:"Sum of angles in a triangle?",a:"180°",w:["90°","270°","360°"]},
+    {q:"Sum of angles in a quadrilateral?",a:"360°",w:["180°","270°","540°"]},
+    {q:"Area of a triangle with base 8 and height 5?",a:"20",w:["40","13","80"]},
+    {q:"Area of a circle with radius 3? (use π ≈ 3.14)",a:"28.26",w:["18.84","9.42","6.28"]},
+    {q:"The Pythagorean theorem applies to…",a:"Right triangles",w:["All triangles","Equilateral triangles","Obtuse triangles"]},
+    {q:"In a right triangle with legs 3 and 4, the hypotenuse is…",a:"5",w:["6","7","12"]},
+    {q:"Two lines that never intersect are…",a:"Parallel",w:["Perpendicular","Skew","Congruent"]},
+    {q:"Perpendicular lines meet at…",a:"90°",w:["45°","180°","60°"]},
+    {q:"A polygon with 6 sides is a…",a:"Hexagon",w:["Pentagon","Octagon","Heptagon"]},
+    {q:"Volume of a rectangular prism 3×4×5?",a:"60",w:["24","47","120"]},
+    {q:"Complementary angles sum to…",a:"90°",w:["180°","270°","360°"]},
+    {q:"Supplementary angles sum to…",a:"180°",w:["90°","270°","360°"]},
+    {q:"An equilateral triangle has…",a:"3 equal sides and 3 equal angles",w:["2 equal sides","1 right angle","No equal sides"]},
+    {q:"The diameter of a circle is…",a:"Twice the radius",w:["Half the radius","Equal to the radius","Equal to the circumference"]},
+    {q:"Circumference of a circle with diameter 10? (π ≈ 3.14)",a:"31.4",w:["62.8","15.7","100"]},
+    {q:"A quadrilateral with 4 right angles and equal sides is a…",a:"Square",w:["Rectangle","Rhombus","Trapezoid"]},
+    {q:"Vertical angles are always…",a:"Equal",w:["Supplementary","Complementary","Adjacent"]},
+    {q:"The longest side of a right triangle is the…",a:"Hypotenuse",w:["Leg","Base","Median"]},
+  ],
+
   science:[
     {q:"'Powerhouse of the cell'?",a:"Mitochondria",w:["Nucleus","Ribosome","Golgi apparatus"]},
     {q:"Chemical formula for water?",a:"H₂O",w:["CO₂","NaCl","O₂"]},
     {q:"Rock formed from cooled magma?",a:"Igneous rock",w:["Sedimentary","Metamorphic","Limestone"]},
-    {q:"Gas plants absorb in photosynthesis?",a:"Carbon dioxide",w:["Oxygen","Nitrogen","Hydrogen"]},
+    {q:"Gas plants absorb during photosynthesis?",a:"Carbon dioxide",w:["Oxygen","Nitrogen","Hydrogen"]},
     {q:"Atomic number of carbon?",a:"6",w:["12","8","14"]},
     {q:"Speed of light (approx)?",a:"300,000 km/s",w:["150,000 km/s","3,000 km/s","30,000 km/s"]},
     {q:"What keeps planets orbiting the sun?",a:"Gravity",w:["Magnetism","Friction","Inertia"]},
     {q:"Newton's first law — objects at rest…",a:"Stay at rest unless acted upon",w:["Speed up over time","F = ma","Have no mass"]},
     {q:"Function of the nucleus?",a:"Controls cell / stores DNA",w:["Makes energy","Digests waste","Makes proteins"]},
+    {q:"Newton's second law: F = …",a:"mass × acceleration",w:["mass × velocity","weight × height","force × time"]},
+    {q:"State of matter with no definite shape or volume?",a:"Gas",w:["Solid","Liquid","Plasma"]},
+    {q:"The process plants use to make food?",a:"Photosynthesis",w:["Respiration","Fermentation","Digestion"]},
+    {q:"Unit of electric current?",a:"Ampere",w:["Volt","Watt","Ohm"]},
+    {q:"What type of rock forms from sediment?",a:"Sedimentary",w:["Igneous","Metamorphic","Basalt"]},
+    {q:"DNA is found in the…",a:"Nucleus",w:["Ribosome","Mitochondria","Cell wall"]},
+    {q:"The pH of pure water is…",a:"7",w:["0","14","4"]},
+    {q:"Kinetic energy depends on…",a:"Mass and speed",w:["Height and mass","Charge and velocity","Force and distance"]},
+    {q:"The layer of Earth we live on is the…",a:"Crust",w:["Mantle","Core","Lithosphere"]},
   ],
+
+  biology:[
+    {q:"What is the basic unit of life?",a:"The cell",w:["The atom","The tissue","The organ"]},
+    {q:"Organisms that make their own food are called…",a:"Producers",w:["Consumers","Decomposers","Predators"]},
+    {q:"DNA stands for…",a:"Deoxyribonucleic acid",w:["Diribonucleic acid","Double nucleic acid","Dense nitrogen acid"]},
+    {q:"The process of cell division that produces body cells?",a:"Mitosis",w:["Meiosis","Fission","Budding"]},
+    {q:"Meiosis produces…",a:"Sex cells (gametes)",w:["Body cells","Stem cells","Blood cells"]},
+    {q:"Organisms that break down dead matter are…",a:"Decomposers",w:["Producers","Consumers","Predators"]},
+    {q:"What carries oxygen in red blood cells?",a:"Hemoglobin",w:["Plasma","Platelets","White blood cells"]},
+    {q:"Which organ system controls the body with electrical signals?",a:"Nervous system",w:["Endocrine system","Circulatory system","Digestive system"]},
+    {q:"Photosynthesis occurs in the…",a:"Chloroplast",w:["Mitochondria","Nucleus","Ribosome"]},
+    {q:"A group of similar cells working together is a…",a:"Tissue",w:["Organ","System","Organism"]},
+    {q:"Which base pairs with adenine in DNA?",a:"Thymine",w:["Guanine","Cytosine","Uracil"]},
+    {q:"The passing of traits from parents to offspring is…",a:"Heredity",w:["Evolution","Mutation","Adaptation"]},
+    {q:"An organism's physical traits are its…",a:"Phenotype",w:["Genotype","Allele","Chromosome"]},
+    {q:"Dominant alleles are represented by…",a:"Capital letters",w:["Lowercase letters","Numbers","Roman numerals"]},
+    {q:"Cells with a nucleus are called…",a:"Eukaryotic",w:["Prokaryotic","Unicellular","Bacterial"]},
+    {q:"The study of heredity and genes is…",a:"Genetics",w:["Ecology","Anatomy","Physiology"]},
+    {q:"Which system pumps blood through the body?",a:"Circulatory system",w:["Respiratory system","Digestive system","Skeletal system"]},
+    {q:"Bacteria are an example of…",a:"Prokaryotes",w:["Eukaryotes","Fungi","Protists"]},
+  ],
+
   history:[
-    {q:"World War II ended in?",a:"1945",w:["1918","1939","1950"]},
+    {q:"Year the Declaration of Independence was signed?",a:"1776",w:["1775","1787","1781"]},
     {q:"Primary author of the Declaration of Independence?",a:"Thomas Jefferson",w:["Benjamin Franklin","George Washington","John Adams"]},
-    {q:"Berlin Wall fell in?",a:"1989",w:["1961","1975","1991"]},
+    {q:"The Constitution was written in?",a:"1787",w:["1776","1800","1781"]},
     {q:"First US President?",a:"George Washington",w:["Abraham Lincoln","John Adams","Thomas Jefferson"]},
     {q:"What started World War I?",a:"Assassination of Archduke Franz Ferdinand",w:["Invasion of Poland","Bombing of Pearl Harbor","Fall of Berlin Wall"]},
     {q:"American Civil War ended in?",a:"1865",w:["1861","1870","1848"]},
-    {q:"First person to walk on the moon?",a:"Neil Armstrong",w:["Buzz Aldrin","Yuri Gagarin","John Glenn"]},
-    {q:"Empire that built the Colosseum?",a:"Roman Empire",w:["Greek Empire","Ottoman Empire","Byzantine Empire"]},
+    {q:"The Emancipation Proclamation was issued by…",a:"Abraham Lincoln",w:["Ulysses Grant","Frederick Douglass","Andrew Johnson"]},
+    {q:"The Bill of Rights consists of how many amendments?",a:"10",w:["5","15","20"]},
     {q:"Cold War was mainly between which two nations?",a:"USA and USSR",w:["USA and China","UK and Germany","France and Russia"]},
+    {q:"The Louisiana Purchase doubled US territory. It was bought from…",a:"France",w:["Spain","Britain","Mexico"]},
+    {q:"The Constitutional Convention took place in…",a:"Philadelphia",w:["New York","Boston","Washington D.C."]},
+    {q:"Which amendment abolished slavery?",a:"13th Amendment",w:["14th Amendment","15th Amendment","1st Amendment"]},
+    {q:"The Boston Tea Party protested…",a:"Taxation without representation",w:["British invasion","Unfair land laws","Religious persecution"]},
+    {q:"US entered World War II after…",a:"The attack on Pearl Harbor",w:["Germany invading France","The sinking of the Lusitania","The fall of Berlin"]},
+    {q:"The Civil Rights Act was passed in…",a:"1964",w:["1954","1968","1972"]},
+    {q:"Manifest Destiny was the belief that the US should…",a:"Expand across the continent",w:["Remain isolated","Colonize Europe","Free all slaves immediately"]},
+    {q:"The Underground Railroad helped…",a:"Enslaved people escape to freedom",w:["Move goods westward","Transport soldiers","Connect Northern cities"]},
+    {q:"The first 10 amendments to the Constitution are called…",a:"The Bill of Rights",w:["The Articles of Confederation","The Federalist Papers","The Magna Carta"]},
   ],
+
   geography:[
     {q:"Largest continent?",a:"Asia",w:["Africa","North America","Europe"]},
     {q:"Longest river in the world?",a:"The Nile",w:["The Amazon","The Mississippi","The Yangtze"]},
@@ -706,140 +523,259 @@ const BANKS = {
     {q:"Smallest country in the world?",a:"Vatican City",w:["Monaco","San Marino","Liechtenstein"]},
     {q:"Largest hot desert?",a:"The Sahara",w:["The Gobi","The Arabian","The Kalahari"]},
     {q:"Mountain range separating Europe and Asia?",a:"The Ural Mountains",w:["The Alps","The Himalayas","The Rockies"]},
-    {q:"How many countries in Africa?",a:"54",w:["42","67","31"]},
+    {q:"How many countries are in Africa?",a:"54",w:["42","67","31"]},
+    {q:"The equator passes through which ocean?",a:"All three major oceans",w:["Only the Pacific","Only the Atlantic","Only the Indian"]},
+    {q:"Capital of Japan?",a:"Tokyo",w:["Osaka","Kyoto","Hiroshima"]},
+    {q:"The Amazon Rainforest is primarily in…",a:"Brazil",w:["Peru","Colombia","Venezuela"]},
+    {q:"Which country has the most people?",a:"India",w:["China","USA","Indonesia"]},
+    {q:"The Great Barrier Reef is located near…",a:"Australia",w:["New Zealand","Indonesia","Philippines"]},
+    {q:"Mount Everest is in the…",a:"Himalayas",w:["Andes","Rockies","Alps"]},
+    {q:"The Sahara Desert is in…",a:"Northern Africa",w:["Southern Africa","Central Africa","The Middle East"]},
+    {q:"Which is the longest mountain range in the world?",a:"The Andes",w:["The Himalayas","The Rockies","The Alps"]},
+    {q:"Capital of Canada?",a:"Ottawa",w:["Toronto","Vancouver","Montreal"]},
   ],
+
   ela:[
-    {q:"A metaphor is?",a:"Direct comparison — no 'like' or 'as'",w:["Uses 'like' or 'as'","Imitates a sound","Gives traits to non-humans"]},
-    {q:"The protagonist is?",a:"The main character",w:["The villain","The narrator","The antagonist"]},
-    {q:"Irony means?",a:"Opposite of what's expected happens",w:["Repeated sound","Exaggeration","Multiple meanings"]},
-    {q:"Foreshadowing is?",a:"Hints about future events",w:["A flashback","The climax","The resolution"]},
-    {q:"An antagonist is?",a:"Character opposing the protagonist",w:["The main character","The narrator","A minor character"]},
-    {q:"Theme of a story is?",a:"The central message or lesson",w:["The setting","The plot","The point of view"]},
-    {q:"Inference means?",a:"Using clues to draw a conclusion",w:["Summarizing","Author's purpose","Identifying genre"]},
-    {q:"Alliteration is?",a:"Repeated consonant sounds at word starts",w:["Vowel repetition","End rhyming","A comparison"]},
-    {q:"Simile uses which words to compare?",a:"Like or as",w:["But or and","Is or are","Not or never"]},
-  ]
+    {q:"A metaphor is…",a:"A direct comparison without 'like' or 'as'",w:["Uses 'like' or 'as'","Imitates a sound","Gives traits to non-humans"]},
+    {q:"The protagonist is…",a:"The main character",w:["The villain","The narrator","The antagonist"]},
+    {q:"Irony means…",a:"The opposite of what is expected happens",w:["Repeated sound","Exaggeration","Multiple meanings"]},
+    {q:"Foreshadowing is…",a:"Hints about future events",w:["A flashback","The climax","The resolution"]},
+    {q:"An antagonist is…",a:"The character opposing the protagonist",w:["The main character","The narrator","A minor character"]},
+    {q:"Theme of a story is…",a:"The central message or lesson",w:["The setting","The plot","The point of view"]},
+    {q:"Inference means…",a:"Using clues to draw a conclusion",w:["Summarizing the text","Author's purpose","Identifying the genre"]},
+    {q:"Alliteration is…",a:"Repeated consonant sounds at word starts",w:["Vowel repetition","End rhyming","A comparison"]},
+    {q:"A simile uses…",a:"Like or as",w:["But or and","Is or are","Not or never"]},
+    {q:"Personification gives…",a:"Human traits to non-human things",w:["Animals human names","Objects magical powers","Feelings to places only"]},
+    {q:"The climax of a story is…",a:"The turning point of highest tension",w:["The beginning","The resolution","The exposition"]},
+    {q:"First-person point of view uses…",a:"I, me, my",w:["He, she, they","You, your","One, another"]},
+    {q:"A hyperbole is…",a:"An extreme exaggeration",w:["An understatement","A comparison","A sound imitation"]},
+    {q:"Onomatopoeia is…",a:"A word that imitates a sound",w:["A comparison","An exaggeration","A human trait given to objects"]},
+    {q:"The exposition of a story introduces…",a:"Characters, setting, and situation",w:["The conflict only","The resolution","The climax"]},
+    {q:"A biography is written…",a:"About someone else's life",w:["By the subject about themselves","As a fictional story","As a poem"]},
+    {q:"Tone in writing refers to…",a:"The author's attitude toward the subject",w:["The speed of the story","The setting's mood","The narrator's name"]},
+    {q:"Dialogue is…",a:"Conversation between characters",w:["A character's thoughts","The narrator's voice","Stage directions"]},
+  ],
+
+  vocab:[
+    {q:"What does 'benevolent' mean?",a:"Kind and generous",w:["Cruel and strict","Shy and quiet","Loud and proud"]},
+    {q:"What does 'ambiguous' mean?",a:"Unclear or having multiple meanings",w:["Very clear","Completely wrong","Surprisingly good"]},
+    {q:"What does 'diligent' mean?",a:"Hardworking and careful",w:["Lazy","Dishonest","Confused"]},
+    {q:"What does 'eloquent' mean?",a:"Fluent and persuasive in speech",w:["Rude and blunt","Quiet and shy","Confusing and unclear"]},
+    {q:"What does 'tenacious' mean?",a:"Persistent and determined",w:["Fearful","Lazy","Generous"]},
+    {q:"What does 'skeptical' mean?",a:"Doubtful or questioning",w:["Fully convinced","Very excited","Deeply sad"]},
+    {q:"What does 'candid' mean?",a:"Honest and straightforward",w:["Secretive","Polite but evasive","Confused"]},
+    {q:"What does 'imminent' mean?",a:"About to happen very soon",w:["Already happened","Far in the future","Unlikely to occur"]},
+    {q:"What does 'concise' mean?",a:"Short and clear",w:["Long and detailed","Confusing","Repetitive"]},
+    {q:"What does 'empathy' mean?",a:"Understanding another's feelings",w:["Feeling sorry for yourself","Ignoring others","Being competitive"]},
+    {q:"What does 'persevere' mean?",a:"Keep going despite difficulty",w:["Give up easily","Start over","Ask for help"]},
+    {q:"What does 'obsolete' mean?",a:"No longer used or needed",w:["Brand new","Very popular","Hard to find"]},
+    {q:"What does 'vivid' mean?",a:"Bright and clear",w:["Dull and unclear","Old and worn","Small and hidden"]},
+    {q:"What does 'elaborate' mean?",a:"Detailed and complex",w:["Simple and plain","Broken and old","Quick and easy"]},
+    {q:"What does 'bias' mean?",a:"A preference that affects fairness",w:["A fact that is proven","A tool for writing","A type of argument"]},
+    {q:"What does 'context' mean?",a:"The circumstances surrounding an event or word",w:["The main idea only","The last sentence","The title of a text"]},
+    {q:"What does 'relevant' mean?",a:"Related and important to the topic",w:["Off topic","Very old","Confusing"]},
+    {q:"What does 'cite' mean?",a:"To reference a source of information",w:["To copy without credit","To disagree with","To summarize briefly"]},
+  ],
+
+  mixed:[] // filled dynamically
 };
 
-/* ═══════════════════════════════════════
+// Mixed quiz pulls 2-3 questions from several banks
+function buildMixed(){
+  const pools=['romans','proverbs','algebra','science','history','ela','vocab'];
+  let all=[];
+  pools.forEach(k=>{
+    const picked=shuffle(BANKS[k]).slice(0,2);
+    all=[...all,...picked];
+  });
+  return shuffle(all).slice(0,9);
+}
+
+/* ═══════════════════════════════════════════════════
    LEVEL PARAMETERS
-═══════════════════════════════════════ */
-function levelParams(lvl) {
+═══════════════════════════════════════════════════ */
+function levelParams(lvl){
   return {
-    baseSpeed: 0.45 + lvl * 0.05,
-    obsCount: lvl < 3 ? 1 : lvl < 6 ? 2 : 3,
-    balloonRise: -(0.18 - lvl * 0.006),
-    label: String(lvl + 1)
+    baseSpeed: 0.45+lvl*0.05,
+    obsCount: lvl<3?1:lvl<6?2:3,
+    balloonRise: -(0.18-lvl*0.006),
+    label: String(lvl+1)
   };
 }
 
-/* ═══════════════════════════════════════
+/* ═══════════════════════════════════════════════════
+   FEEDBACK MESSAGES
+═══════════════════════════════════════════════════ */
+const CORRECT_MSGS=[
+  '💥 Correct! Obstacle cleared — balloon rising!',
+  '🎉 Yes! Nailed it — blasting through!',
+  '⚡ Right! Path cleared — keep going!',
+  '🌟 Awesome! That obstacle is gone!',
+  '🔥 Correct! Balloon is shooting up!',
+  '✅ Perfect! On to the next one!',
+];
+const WRONG_MSGS=[
+  '❌ Not quite! Check the correct answer below.',
+  '💪 Close! You\'ll get it — new obstacle incoming.',
+  '🤔 Not this time! The right answer is shown.',
+  '😬 Oops! Review it and try again next time.',
+  '📚 Not quite! Study tip: re-read that one!',
+  '🎈 Keep going! Correct answer is highlighted.',
+];
+function randMsg(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+
+/* ═══════════════════════════════════════════════════
    STATE
-═══════════════════════════════════════ */
+═══════════════════════════════════════════════════ */
 let questions=[], qIdx=0, score=0, correctCount=0, lives=5;
-let imageB64=null, pastedB64=null, notesText='', selSubject=null, aiTopic='', difficulty='easy';
-let activeTab='tab-subject', lastLabel='Study';
-let answered=false, gameOver=false;
+let notesText='', selSubject=null;
+let lastLabel='Study', activeTab='tab-subject';
+let answered=false, gameOver=false, gameStarting=false;
 let canvas, ctx, W, H, raf=null;
 let bx, by, bRadius=20, bVY;
 let obstacles=[];
 
-/* ═══════════════════════════════════════
+/* ═══════════════════════════════════════════════════
    UTILITIES
-═══════════════════════════════════════ */
+═══════════════════════════════════════════════════ */
 function shuffle(a){ return [...a].sort(()=>Math.random()-0.5); }
 function showScreen(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); document.getElementById(id).classList.add('active'); }
-function setStatus(msg,cls=''){ const s=document.getElementById('up-status'); s.textContent=msg; s.className='status'+(cls?' '+cls:''); }
-function checkReady(){ document.getElementById('go-btn').disabled=!(selSubject||(aiTopic.trim().length>2)||imageB64||pastedB64||(notesText.trim().length>20)); }
+function setStatus(msg){ document.getElementById('up-status').textContent=msg; }
+function checkReady(){ document.getElementById('go-btn').disabled=!selSubject; }
 
-/* ═══════════════════════════════════════
-   UI INTERACTIONS
-═══════════════════════════════════════ */
-function switchTab(id,btn){
+/* ═══════════════════════════════════════════════════
+   TAB SWITCHING
+═══════════════════════════════════════════════════ */
+function switchTab(id, btn){
   document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   btn.classList.add('active');
   activeTab=id;
-  if(id==='tab-paste-img') setTimeout(()=>document.getElementById('paste-img-zone').focus(),100);
-}
-function updateAiBtn(){ const btn=document.getElementById('ai-submit-btn'); if(btn){const ok=aiTopic.trim().length>2; btn.disabled=!ok; btn.style.opacity=ok?'1':'0.35'; btn.style.cursor=ok?'pointer':'default';} }
-function handleTopicInput(){ aiTopic=document.getElementById('topic-input').value; if(aiTopic.trim().length>2){selSubject=null;setStatus('Topic ready! ✓','ok');}else setStatus(''); checkReady(); updateAiBtn(); }
-function setTopic(t){ document.getElementById('topic-input').value=t; aiTopic=t; selSubject=null; setStatus('Topic: '+t+' ✓','ok'); checkReady(); updateAiBtn(); }
-function setDiff(d,el){ difficulty=d; document.querySelectorAll('.diff-btn').forEach(b=>b.classList.remove('sel')); el.classList.add('sel'); }
-function handleFile(e){ const f=e.target.files[0]; if(!f)return; readImg(f,'preview-photo',b64=>{imageB64=b64;pastedB64=null;notesText='';selSubject=null;aiTopic='';setStatus('Photo loaded! ✓','ok');checkReady();}); }
-function readImg(file,pid,cb){ const r=new FileReader(); r.onload=ev=>{const s=ev.target.result;const i=document.getElementById(pid);if(i){i.src=s;i.style.display='block';}cb(s.split(',')[1]);}; r.readAsDataURL(file); }
-function handleImagePaste(e){ const items=(e.clipboardData||{}).items||[]; for(let it of items){if(it.type.startsWith('image/')){e.preventDefault();readImg(it.getAsFile(),'preview-paste-img',b64=>{pastedB64=b64;imageB64=null;notesText='';selSubject=null;aiTopic='';setStatus('Image pasted! ✓','ok');checkReady();});return;}} setStatus('No image found.','err'); }
-document.addEventListener('paste',e=>{if(activeTab==='tab-paste-img')handleImagePaste(e);});
-function updateTextBtn(){ const btn=document.getElementById('text-submit-btn'); if(btn){const ok=notesText.trim().length>20; btn.disabled=!ok; btn.style.opacity=ok?'1':'0.35'; btn.style.cursor=ok?'pointer':'default';} }
-function handleTextInput(){ notesText=document.getElementById('notes-text').value; document.getElementById('char-count').textContent=notesText.length; if(notesText.trim().length>20){selSubject=null;setStatus('Notes ready! ✓','ok');}else setStatus(''); checkReady(); updateTextBtn(); }
-function pickSubject(sub,el){
-  selSubject=sub; imageB64=null; pastedB64=null; notesText=''; aiTopic='';
-  document.querySelectorAll('.subject-chip').forEach(c=>c.classList.remove('sel')); el.classList.add('sel');
-  const names={romans:'Romans 1-8',algebra:'Algebra 1',science:'Science',history:'History',geography:'Geography',ela:'ELA'};
-  lastLabel=names[sub]||sub;
-  setStatus(lastLabel+' — ready! ✓','ok'); checkReady();
+  // go-btn only shows on subjects tab
+  document.getElementById('go-btn').style.display=(id==='tab-subject')?'block':'none';
 }
 
-/* ═══════════════════════════════════════
-   GAME START
-═══════════════════════════════════════ */
-async function startGame(){
-  if(selSubject){
-    const raw=shuffle(BANKS[selSubject]).slice(0,9);
-    questions=raw.map(q=>({question:q.q,correct:q.a,answers:shuffle([q.a,...q.w.slice(0,3)])}));
-    initGame(lastLabel);
-    return;
-  }
+/* ═══════════════════════════════════════════════════
+   SUBJECT PICKER
+═══════════════════════════════════════════════════ */
+function pickSubject(sub, el){
+  selSubject=sub;
+  document.querySelectorAll('.subject-chip').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel');
+  const names={
+    romans:'Romans 1–8', romans9:'Romans 9–16', proverbs:'Proverbs',
+    algebra:'Algebra 1', geometry:'Geometry', science:'Science',
+    biology:'Biology', history:'US History', geography:'Geography',
+    ela:'ELA', vocab:'Vocabulary', mixed:'Mixed Quiz'
+  };
+  lastLabel=names[sub]||sub;
+  setStatus(lastLabel+' selected ✓');
+  checkReady();
+}
+
+/* ═══════════════════════════════════════════════════
+   PASTE TEXT FLOW
+═══════════════════════════════════════════════════ */
+function handleTextInput(){
+  notesText=document.getElementById('notes-text').value;
+  document.getElementById('char-count').textContent=notesText.length;
+  const ok=notesText.trim().length>20;
+  const btn=document.getElementById('text-submit-btn');
+  btn.disabled=!ok;
+  // hide previous warning when user starts editing
+  document.getElementById('text-warn').classList.remove('show');
+}
+
+async function startFromText(){
+  if(gameStarting) return;
+  gameStarting=true;
+  const warn=document.getElementById('text-warn');
+  warn.classList.remove('show');
   showScreen('load-screen');
   try{
-    const b64=imageB64||pastedB64;
-    if(aiTopic.trim().length>2) await genFromTopic(aiTopic.trim(),difficulty);
-    else if(b64) await genFromImage(b64);
-    else if(notesText.trim().length>20) await genFromText(notesText);
+    const txt=await callClaude([{role:'user',content:BASE_PROMPT+'\nNotes:\n'+notesText.trim().slice(0,4000)}]);
+    const p=JSON.parse(txt.replace(/```json|```/g,'').trim());
+    questions=p.questions;
+    lastLabel=p.subject||'My Notes';
+    initGame(lastLabel);
   }catch(e){
     showScreen('upload-screen');
-    setStatus('Connection error — use 📚 Subjects which always works!','err');
+    switchTab('tab-text', document.querySelectorAll('.tab-btn')[1]);
+    warn.textContent='⚠️ Could not connect to AI. Check your internet connection and try again. The 📚 Subjects tab always works offline!';
+    warn.classList.add('show');
+  }finally{
+    gameStarting=false;
   }
 }
 
 async function callClaude(msgs){
-  const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1400,messages:msgs})});
+  const r=await fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1400,messages:msgs})
+  });
   if(!r.ok) throw new Error('API '+r.status);
   const d=await r.json();
   if(d.error) throw new Error(d.error.message);
   return d.content.map(i=>i.text||'').join('');
 }
 
-const BASE_P=`Generate exactly 9 multiple choice study questions. Return ONLY valid JSON (no markdown):
-{"subject":"<topic>","questions":[{"question":"<q>","correct":"<correct>","answers":["<correct>","<w1>","<w2>","<w3>"]}]}
-Rules: 4 shuffled answers, answers under 9 words.`;
+const BASE_PROMPT=`Generate exactly 9 multiple choice study questions from these notes. Return ONLY valid JSON, no markdown:
+{"subject":"<short topic name>","questions":[{"question":"<question>","correct":"<correct answer>","answers":["<correct>","<wrong1>","<wrong2>","<wrong3>"]}]}
+Rules: exactly 4 answers per question, answers under 10 words each, shuffle the answers array.`;
 
-async function genFromTopic(t,d){ const dt={easy:'straightforward',medium:'challenging',hard:'advanced and tricky'}[d]; const txt=await callClaude([{role:'user',content:BASE_P+'\nTopic:"'+t+'"\nDifficulty:'+dt}]); parseInit(txt); }
-async function genFromImage(b64){ const txt=await callClaude([{role:'user',content:[{type:'image',source:{type:'base64',media_type:'image/jpeg',data:b64}},{type:'text',text:BASE_P+'\nBase on this image.'}]}]); parseInit(txt); }
-async function genFromText(notes){ const txt=await callClaude([{role:'user',content:BASE_P+'\nNotes:\n'+notes.slice(0,4000)}]); parseInit(txt); }
-function parseInit(raw){ const p=JSON.parse(raw.replace(/```json|```/g,'').trim()); questions=p.questions; lastLabel=p.subject||'Quiz'; initGame(lastLabel); }
+/* ═══════════════════════════════════════════════════
+   MAIN START (Subjects tab)
+═══════════════════════════════════════════════════ */
+function startGame(){
+  if(!selSubject||gameStarting) return;
+  gameStarting=true;
+  let raw;
+  if(selSubject==='mixed') raw=buildMixed();
+  else raw=shuffle(BANKS[selSubject]).slice(0,9);
+  questions=raw.map(q=>({question:q.q,correct:q.a,answers:shuffle([q.a,...q.w.slice(0,3)])}));
+  initGame(lastLabel);
+  gameStarting=false;
+}
 
-/* ═══════════════════════════════════════
+/* ═══════════════════════════════════════════════════
    GAME INIT
-═══════════════════════════════════════ */
+═══════════════════════════════════════════════════ */
 function initGame(label){
-  lastLabel=label; qIdx=0; score=0; correctCount=0; lives=5; answered=false; gameOver=false;
+  lastLabel=label;
+  qIdx=0; score=0; correctCount=0; lives=5; answered=false; gameOver=false;
   document.getElementById('q-num').textContent=1;
   document.getElementById('q-tot').textContent=questions.length;
   document.getElementById('score').textContent=0;
   document.getElementById('feedback').className='feedback';
   updateHearts();
   showScreen('game-screen');
+
   canvas=document.getElementById('gc');
-  W=canvas.parentElement.clientWidth;
-  H=canvas.parentElement.clientHeight;
-  canvas.width=W; canvas.height=H;
-  ctx=canvas.getContext('2d');
+  resizeCanvas();
   resetLevel(0);
   if(raf) cancelAnimationFrame(raf);
   raf=requestAnimationFrame(loop);
 }
+
+function resizeCanvas(){
+  const wrap=canvas.parentElement;
+  W=wrap.clientWidth;
+  H=wrap.clientHeight;
+  canvas.width=W;
+  canvas.height=H;
+}
+
+// Fix canvas on phone rotation
+window.addEventListener('resize',()=>{
+  if(document.getElementById('game-screen').classList.contains('active')){
+    resizeCanvas();
+    // reposition balloon safely
+    bx=W/2;
+    by=Math.min(by,H-55);
+  }
+});
 
 function resetLevel(lvl){
   const p=levelParams(lvl);
@@ -854,21 +790,25 @@ function resetLevel(lvl){
 
 function goHome(){
   if(raf) cancelAnimationFrame(raf);
-  imageB64=null; pastedB64=null; notesText=''; selSubject=null; aiTopic='';
-  ['notes-text','topic-input'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  notesText=''; selSubject=null; gameStarting=false;
+  const ta=document.getElementById('notes-text'); if(ta) ta.value='';
   document.getElementById('char-count').textContent='0';
-  document.getElementById('preview-photo').style.display='none';
-  document.getElementById('preview-paste-img').style.display='none';
+  document.getElementById('text-submit-btn').disabled=true;
+  document.getElementById('text-warn').classList.remove('show');
   document.querySelectorAll('.subject-chip').forEach(c=>c.classList.remove('sel'));
   document.getElementById('go-btn').disabled=true;
+  document.getElementById('go-btn').style.display='block';
   setStatus('');
+  // reset to subjects tab
+  switchTab('tab-subject', document.querySelectorAll('.tab-btn')[0]);
   showScreen('upload-screen');
 }
-function replayGame(){ initGame(lastLabel); }
 
-/* ═══════════════════════════════════════
+function replayGame(){ gameStarting=false; initGame(lastLabel); }
+
+/* ═══════════════════════════════════════════════════
    GAME LOOP
-═══════════════════════════════════════ */
+═══════════════════════════════════════════════════ */
 const SHAPES=['rect','rect','circle','diamond'];
 const COLORS=['#378ADD','#D85A30','#1D9E75','#BA7517','#D4537E','#534AB7','#0ea5e9','#f97316'];
 
@@ -891,8 +831,8 @@ function update(){
   by+=bVY;
   bx=W/2+Math.sin(Date.now()/2000)*12;
   obstacles.forEach(o=>{
-    if(!o.alive)return;
-    if(o.clearing){o.clearTimer++;o.alpha=Math.max(0,1-o.clearTimer/20);if(o.clearTimer>20)o.alive=false;return;}
+    if(!o.alive) return;
+    if(o.clearing){ o.clearTimer++; o.alpha=Math.max(0,1-o.clearTimer/20); if(o.clearTimer>20)o.alive=false; return; }
     o.x+=o.vx;
     if(o.x+o.w/2>W+8) o.vx=-Math.abs(o.vx);
     if(o.x-o.w/2<-8) o.vx=Math.abs(o.vx);
@@ -902,8 +842,8 @@ function update(){
       if(balloonHits(o)){
         o.clearing=true; lives--; updateHearts();
         by=Math.min(by+70,H-55);
-        if(lives<=0){endGame(false);return;}
-        setTimeout(()=>{if(!gameOver)spawnObstacle(p.baseSpeed,0,1);},900);
+        if(lives<=0){ endGame(false); return; }
+        setTimeout(()=>{ if(!gameOver) spawnObstacle(p.baseSpeed,0,1); },900);
         break;
       }
     }
@@ -921,158 +861,124 @@ function balloonHits(o){
   return dx*dx+dy*dy<bRadius*bRadius;
 }
 
-/* ═══════════════════════════════════════
+/* ═══════════════════════════════════════════════════
    DRAWING
-═══════════════════════════════════════ */
+═══════════════════════════════════════════════════ */
 function drawScene(){
   ctx.clearRect(0,0,W,H);
   const dark=matchMedia('(prefers-color-scheme:dark)').matches;
   const hue=210-qIdx*5;
   const g=ctx.createLinearGradient(0,0,0,H);
-  if(dark){
-    g.addColorStop(0,`hsl(${hue},45%,10%)`);
-    g.addColorStop(1,`hsl(${hue},38%,5%)`);
-  }else{
-    g.addColorStop(0,`hsl(${hue},72%,84%)`);
-    g.addColorStop(1,`hsl(${hue},55%,93%)`);
-  }
+  if(dark){g.addColorStop(0,`hsl(${hue},45%,10%)`);g.addColorStop(1,`hsl(${hue},38%,5%)`);}
+  else{g.addColorStop(0,`hsl(${hue},72%,84%)`);g.addColorStop(1,`hsl(${hue},55%,93%)`);}
   ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
 
-  /* clouds */
-  drawCloud(W*0.12,H*0.06,0.7,dark);
-  drawCloud(W*0.72,H*0.15,0.5,dark);
-  drawCloud(W*0.43,H*0.28,0.38,dark);
-  drawCloud(W*0.2,H*0.45,0.42,dark);
-  drawCloud(W*0.78,H*0.55,0.35,dark);
-  drawCloud(W*0.5,H*0.72,0.45,dark);
+  drawCloud(W*0.12,H*0.06,0.7,dark); drawCloud(W*0.72,H*0.15,0.5,dark);
+  drawCloud(W*0.43,H*0.28,0.38,dark); drawCloud(W*0.2,H*0.45,0.42,dark);
+  drawCloud(W*0.78,H*0.55,0.35,dark); drawCloud(W*0.5,H*0.72,0.45,dark);
 
-  /* escape zone line */
   ctx.setLineDash([6,4]);
   ctx.strokeStyle=dark?'rgba(255,255,255,0.22)':'rgba(0,80,200,0.25)';
   ctx.lineWidth=1.5;
   ctx.beginPath(); ctx.moveTo(0,30); ctx.lineTo(W,30); ctx.stroke();
   ctx.setLineDash([]);
   ctx.fillStyle=dark?'rgba(255,255,255,0.4)':'rgba(0,80,200,0.35)';
-  ctx.font='bold 9px Nunito, sans-serif';
-  ctx.textAlign='center';
+  ctx.font='bold 9px Nunito,sans-serif'; ctx.textAlign='center';
   ctx.fillText('✦  ESCAPE ZONE  ✦',W/2,21);
 
   obstacles.forEach(o=>{if(o.alive)drawObstacle(o);});
   drawBalloon(bx,by,dark);
 
-  /* progress bar */
   ctx.fillStyle=dark?'rgba(255,255,255,0.05)':'rgba(0,0,0,0.06)';
   ctx.fillRect(0,H-5,W,5);
   const pct=(qIdx+1)/questions.length;
-  const grad=ctx.createLinearGradient(0,0,W*pct,0);
-  grad.addColorStop(0,'#2563eb');
-  grad.addColorStop(1,'#7c3aed');
-  ctx.fillStyle=grad;
-  ctx.fillRect(0,H-5,W*pct,5);
+  const gr=ctx.createLinearGradient(0,0,W*pct,0);
+  gr.addColorStop(0,'#2563eb'); gr.addColorStop(1,'#7c3aed');
+  ctx.fillStyle=gr; ctx.fillRect(0,H-5,W*pct,5);
 }
 
 function drawCloud(x,y,scale,dark){
-  ctx.save();
-  ctx.globalAlpha=dark?0.06:0.45;
-  ctx.fillStyle='#fff';
+  ctx.save(); ctx.globalAlpha=dark?0.06:0.45; ctx.fillStyle='#fff';
   const r=22*scale;
   ctx.beginPath();
-  ctx.arc(x,y,r,0,Math.PI*2);
-  ctx.arc(x+r*1.1,y+r*0.22,r*0.72,0,Math.PI*2);
-  ctx.arc(x-r*0.88,y+r*0.22,r*0.62,0,Math.PI*2);
-  ctx.arc(x+r*0.28,y+r*0.52,r*0.78,0,Math.PI*2);
-  ctx.fill();
-  ctx.restore();
+  ctx.arc(x,y,r,0,Math.PI*2); ctx.arc(x+r*1.1,y+r*0.22,r*0.72,0,Math.PI*2);
+  ctx.arc(x-r*0.88,y+r*0.22,r*0.62,0,Math.PI*2); ctx.arc(x+r*0.28,y+r*0.52,r*0.78,0,Math.PI*2);
+  ctx.fill(); ctx.restore();
 }
 
 function drawObstacle(o){
-  ctx.save();
-  ctx.globalAlpha=o.alpha;
-  ctx.shadowColor='rgba(0,0,0,0.2)';
-  ctx.shadowBlur=8;
-  ctx.shadowOffsetY=3;
-  ctx.fillStyle=o.color;
-  ctx.strokeStyle='rgba(0,0,0,0.12)';
-  ctx.lineWidth=1.5;
-  const x=o.x,y=o.y,w=o.w,h=o.h;
+  ctx.save(); ctx.globalAlpha=o.alpha;
+  ctx.shadowColor='rgba(0,0,0,0.2)'; ctx.shadowBlur=8; ctx.shadowOffsetY=3;
+  ctx.fillStyle=o.color; ctx.strokeStyle='rgba(0,0,0,0.12)'; ctx.lineWidth=1.5;
+  const {x,y,w,h}=o;
   ctx.beginPath();
   if(o.shape==='circle') ctx.arc(x,y,Math.min(w,h)/2,0,Math.PI*2);
   else if(o.shape==='diamond'){ctx.moveTo(x,y-h/2);ctx.lineTo(x+w/2,y);ctx.lineTo(x,y+h/2);ctx.lineTo(x-w/2,y);ctx.closePath();}
   else ctx.roundRect(x-w/2,y-h/2,w,h,8);
   ctx.fill(); ctx.stroke();
   if(o.clearing){
-    ctx.shadowBlur=0;
-    ctx.globalAlpha=o.alpha*0.5;
-    ctx.strokeStyle=o.color;
-    ctx.lineWidth=3;
-    ctx.beginPath();
-    ctx.arc(x,y,(1-o.alpha)*Math.max(w,h)*0.9,0,Math.PI*2);
-    ctx.stroke();
+    ctx.shadowBlur=0; ctx.globalAlpha=o.alpha*0.5;
+    ctx.strokeStyle=o.color; ctx.lineWidth=3;
+    ctx.beginPath(); ctx.arc(x,y,(1-o.alpha)*Math.max(w,h)*0.9,0,Math.PI*2); ctx.stroke();
   }
   ctx.restore();
 }
 
 function drawBalloon(x,y,dark){
-  const r=bRadius;
-  ctx.save();
-  /* string */
-  ctx.strokeStyle=dark?'rgba(255,255,255,0.35)':'rgba(0,0,0,0.3)';
-  ctx.lineWidth=1.2;
+  const r=bRadius; ctx.save();
+  ctx.strokeStyle=dark?'rgba(255,255,255,0.35)':'rgba(0,0,0,0.3)'; ctx.lineWidth=1.2;
   ctx.beginPath(); ctx.moveTo(x,y+r); ctx.lineTo(x-3,y+r+22); ctx.stroke();
-  /* shadow */
-  ctx.globalAlpha=0.1;
-  ctx.fillStyle='#000';
+  ctx.globalAlpha=0.1; ctx.fillStyle='#000';
   ctx.beginPath(); ctx.ellipse(x,y+r+2,r*0.65,3.5,0,0,Math.PI*2); ctx.fill();
   ctx.globalAlpha=1;
-  /* body */
   ctx.fillStyle='#E8593C';
   ctx.beginPath(); ctx.ellipse(x,y,r,r*1.2,0,0,Math.PI*2); ctx.fill();
-  /* shine */
   ctx.fillStyle='rgba(255,255,255,0.3)';
   ctx.beginPath(); ctx.ellipse(x-r*0.3,y-r*0.3,r*0.27,r*0.17,Math.PI/5,0,Math.PI*2); ctx.fill();
-  /* knot */
   ctx.fillStyle='#9B3520';
   ctx.beginPath(); ctx.arc(x,y+r*1.05,3.5,0,Math.PI*2); ctx.fill();
   ctx.restore();
 }
 
-/* ═══════════════════════════════════════
-   QUESTION RENDERING & ANSWERS
-═══════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════
+   QUESTION & ANSWERS
+═══════════════════════════════════════════════════ */
 function renderQuestion(idx){
   const q=questions[idx];
   document.getElementById('q-text').textContent=q.question;
-  const grid=document.getElementById('ans-grid');
-  grid.innerHTML='';
+  const grid=document.getElementById('ans-grid'); grid.innerHTML='';
   q.answers.forEach(ans=>{
     const btn=document.createElement('button');
-    btn.className='ans-btn';
-    btn.textContent=ans;
+    btn.className='ans-btn'; btn.textContent=ans;
     btn.onclick=()=>handleAnswer(ans===q.correct,btn,q.correct);
     grid.appendChild(btn);
   });
 }
 
 function handleAnswer(isCorrect,btn,correctAns){
-  if(answered||gameOver)return;
+  if(answered||gameOver) return;
   answered=true;
-  document.querySelectorAll('.ans-btn').forEach(b=>{b.disabled=true;if(b.textContent===correctAns)b.classList.add('correct');});
+  // disable all buttons immediately (prevents double-tap)
+  document.querySelectorAll('.ans-btn').forEach(b=>{
+    b.disabled=true;
+    if(b.textContent===correctAns) b.classList.add('correct');
+  });
   const fb=document.getElementById('feedback');
   if(isCorrect){
     score+=100+qIdx*10; correctCount++;
     document.getElementById('score').textContent=score;
     btn.classList.add('correct');
-    fb.textContent='Correct! 💥 Obstacle cleared — balloon rising!';
+    fb.textContent=randMsg(CORRECT_MSGS);
     fb.className='feedback c';
     obstacles.forEach(o=>{if(o.alive&&!o.clearing)o.clearing=true;});
     bVY=-1.6;
   }else{
     btn.classList.add('wrong');
-    fb.textContent='Not quite! Correct: '+correctAns+' — new obstacle incoming!';
+    fb.textContent=randMsg(WRONG_MSGS)+' Correct: '+correctAns;
     fb.className='feedback w';
     obstacles.forEach(o=>{if(o.alive&&!o.clearing)o.clearing=true;});
     lives--; updateHearts();
-    if(lives<=0){endGame(false);return;}
+    if(lives<=0){ endGame(false); return; }
     by=Math.min(by+60,H-55);
     bVY=levelParams(qIdx).balloonRise*0.5;
     setTimeout(()=>{
@@ -1083,7 +989,7 @@ function handleAnswer(isCorrect,btn,correctAns){
         fb.className='feedback';
         document.querySelectorAll('.ans-btn').forEach(b=>{b.disabled=false;b.classList.remove('correct','wrong');});
       }
-    },1500);
+    },1600);
   }
 }
 
@@ -1091,16 +997,17 @@ function updateHearts(){
   ['h1','h2','h3','h4','h5'].forEach((id,i)=>document.getElementById(id).classList.toggle('lost',i>=lives));
 }
 
-/* ═══════════════════════════════════════
+/* ═══════════════════════════════════════════════════
    END GAME
-═══════════════════════════════════════ */
+═══════════════════════════════════════════════════ */
 function endGame(won){
-  gameOver=true;
-  cancelAnimationFrame(raf);
+  gameOver=true; cancelAnimationFrame(raf);
   const pct=questions.length>0?Math.round(correctCount/questions.length*100):0;
   document.getElementById('end-emoji').textContent=won?'🎈':'💨';
   document.getElementById('end-title').textContent=won?'You escaped!':'The balloon popped!';
-  document.getElementById('end-sub').textContent=won?'You beat all 9 levels! 🎉':"Don't give up — try again!";
+  document.getElementById('end-sub').textContent=won
+    ?'You beat all '+questions.length+' levels! 🎉'
+    :"Don't give up — you've got this! Try again!";
   document.getElementById('fin-score').textContent=score;
   document.getElementById('fin-cor').textContent=correctCount+'/'+questions.length;
   document.getElementById('fin-pct').textContent=pct+'%';
