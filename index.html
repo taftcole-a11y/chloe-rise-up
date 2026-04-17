@@ -586,7 +586,7 @@ function buildMixed(){
   let all=[];
   pools.forEach(k=>{
     const picked=shuffle(BANKS[k]).slice(0,2);
-    all=[...all,...picked];
+    all.push(...picked);
   });
   return shuffle(all).slice(0,9);
 }
@@ -629,11 +629,14 @@ function randMsg(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
 ═══════════════════════════════════════════════════ */
 let questions=[], qIdx=0, score=0, correctCount=0, lives=5;
 let notesText='', selSubject=null;
-let lastLabel='Study', activeTab='tab-subject';
+let lastLabel='Study';
 let answered=false, gameOver=false, gameStarting=false;
 let canvas, ctx, W, H, raf=null;
 let bx, by, bRadius=20, bVY;
 let obstacles=[];
+let isDark=matchMedia('(prefers-color-scheme:dark)').matches;
+matchMedia('(prefers-color-scheme:dark)').addEventListener('change',e=>{isDark=e.matches;});
+let currentLevel={}, progressPct=0;
 
 /* ═══════════════════════════════════════════════════
    UTILITIES
@@ -651,8 +654,6 @@ function switchTab(id, btn){
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   btn.classList.add('active');
-  activeTab=id;
-  // go-btn only shows on subjects tab
   document.getElementById('go-btn').style.display=(id==='tab-subject')?'block':'none';
 }
 
@@ -679,7 +680,7 @@ function pickSubject(sub, el){
 ═══════════════════════════════════════════════════ */
 function updateTextBtn(){
   const btn=document.getElementById('text-submit-btn');
-  if(btn){ const ok=notesText.trim().length>20; btn.disabled=!ok; btn.style.opacity=ok?'1':'0.35'; btn.style.cursor=ok?'pointer':'default'; }
+  if(btn) btn.disabled=notesText.trim().length<=20;
 }
 function handleTextInput(){
   notesText=document.getElementById('notes-text').value;
@@ -745,11 +746,10 @@ function startGame(){
 ═══════════════════════════════════════════════════ */
 function initGame(label){
   lastLabel=label;
-  qIdx=0; score=0; correctCount=0; lives=5; answered=false; gameOver=false;
+  qIdx=0; score=0; correctCount=0; lives=5; gameOver=false;
   document.getElementById('q-num').textContent=1;
   document.getElementById('q-tot').textContent=questions.length;
   document.getElementById('score').textContent=0;
-  document.getElementById('feedback').className='feedback';
   updateHearts();
   showScreen('game-screen');
 
@@ -786,11 +786,12 @@ window.addEventListener('resize',()=>{
 });
 
 function resetLevel(lvl){
-  const p=levelParams(lvl);
-  bx=W/2; by=H-55; bVY=p.balloonRise;
+  currentLevel=levelParams(lvl);
+  progressPct=(lvl+1)/questions.length;
+  bx=W/2; by=H-55; bVY=currentLevel.balloonRise;
   obstacles=[];
-  for(let i=0;i<p.obsCount;i++) spawnObstacle(p.baseSpeed,i,p.obsCount);
-  document.getElementById('level-badge').textContent='Level '+p.label;
+  for(let i=0;i<currentLevel.obsCount;i++) spawnObstacle(currentLevel.baseSpeed,i,currentLevel.obsCount);
+  document.getElementById('level-badge').textContent='Level '+currentLevel.label;
   renderQuestion(lvl);
   answered=false;
   document.getElementById('feedback').className='feedback';
@@ -804,11 +805,9 @@ function goHome(){
   document.getElementById('text-submit-btn').disabled=true;
   document.getElementById('text-warn').classList.remove('show');
   document.querySelectorAll('.subject-chip').forEach(c=>c.classList.remove('sel'));
-  document.getElementById('go-btn').disabled=true;
-  document.getElementById('go-btn').style.display='block';
   setStatus('');
-  // reset to subjects tab
   switchTab('tab-subject', document.querySelectorAll('.tab-btn')[0]);
+  checkReady();
   showScreen('upload-screen');
 }
 
@@ -822,8 +821,8 @@ const COLORS=['#378ADD','#D85A30','#1D9E75','#BA7517','#D4537E','#534AB7','#0ea5
 
 function spawnObstacle(speed,idx,total){
   const fromLeft=idx%2===0;
-  const color=COLORS[Math.floor(Math.random()*COLORS.length)];
-  const shape=SHAPES[Math.floor(Math.random()*SHAPES.length)];
+  const color=randMsg(COLORS);
+  const shape=randMsg(SHAPES);
   const w=55+Math.random()*75;
   const h=28+Math.random()*20;
   const section=(H*0.6)/Math.max(total,1);
@@ -835,23 +834,25 @@ function spawnObstacle(speed,idx,total){
 function loop(){ if(gameOver||!ctx)return; raf=requestAnimationFrame(loop); update(); drawScene(); }
 
 function update(){
-  const p=levelParams(qIdx);
   by+=bVY;
   bx=W/2+Math.sin(Date.now()/2000)*12;
-  obstacles.forEach(o=>{
-    if(!o.alive) return;
-    if(o.clearing){ o.clearTimer++; o.alpha=Math.max(0,1-o.clearTimer/20); if(o.clearTimer>20)o.alive=false; return; }
+  let anyDead=false;
+  for(const o of obstacles){
+    if(!o.alive){ anyDead=true; continue; }
+    if(o.clearing){ o.clearTimer++; o.alpha=Math.max(0,1-o.clearTimer/20); if(o.clearTimer>20){o.alive=false;anyDead=true;} continue; }
     o.x+=o.vx;
     if(o.x+o.w/2>W+8) o.vx=-Math.abs(o.vx);
     if(o.x-o.w/2<-8) o.vx=Math.abs(o.vx);
-  });
+  }
+  if(anyDead) obstacles=obstacles.filter(o=>o.alive);
   if(!answered){
-    for(let o of obstacles.filter(o=>o.alive&&!o.clearing)){
+    for(const o of obstacles){
+      if(o.clearing) continue;
       if(balloonHits(o)){
         o.clearing=true; lives--; updateHearts();
         by=Math.min(by+70,H-55);
         if(lives<=0){ endGame(false); return; }
-        setTimeout(()=>{ if(!gameOver) spawnObstacle(p.baseSpeed,0,1); },900);
+        setTimeout(()=>{ if(!gameOver) spawnObstacle(currentLevel.baseSpeed,0,1); },900);
         break;
       }
     }
@@ -874,7 +875,7 @@ function balloonHits(o){
 ═══════════════════════════════════════════════════ */
 function drawScene(){
   ctx.clearRect(0,0,W,H);
-  const dark=matchMedia('(prefers-color-scheme:dark)').matches;
+  const dark=isDark;
   const hue=210-qIdx*5;
   const g=ctx.createLinearGradient(0,0,0,H);
   if(dark){g.addColorStop(0,`hsl(${hue},45%,10%)`);g.addColorStop(1,`hsl(${hue},38%,5%)`);}
@@ -899,10 +900,9 @@ function drawScene(){
 
   ctx.fillStyle=dark?'rgba(255,255,255,0.05)':'rgba(0,0,0,0.06)';
   ctx.fillRect(0,H-5,W,5);
-  const pct=(qIdx+1)/questions.length;
-  const gr=ctx.createLinearGradient(0,0,W*pct,0);
+  const gr=ctx.createLinearGradient(0,0,W*progressPct,0);
   gr.addColorStop(0,'#2563eb'); gr.addColorStop(1,'#7c3aed');
-  ctx.fillStyle=gr; ctx.fillRect(0,H-5,W*pct,5);
+  ctx.fillStyle=gr; ctx.fillRect(0,H-5,W*progressPct,5);
 }
 
 function drawCloud(x,y,scale,dark){
@@ -963,36 +963,36 @@ function renderQuestion(idx){
   });
 }
 
+function clearObstacles(){
+  obstacles.forEach(o=>{if(o.alive&&!o.clearing)o.clearing=true;});
+}
+
 function handleAnswer(isCorrect,btn,correctAns){
   if(answered||gameOver) return;
   answered=true;
-  // disable all buttons immediately (prevents double-tap)
-  document.querySelectorAll('.ans-btn').forEach(b=>{
+  document.querySelectorAll('.ans-btn').forEach(b=>{ // prevents double-tap
     b.disabled=true;
     if(b.textContent===correctAns) b.classList.add('correct');
   });
   const fb=document.getElementById('feedback');
+  clearObstacles();
   if(isCorrect){
     score+=100+qIdx*10; correctCount++;
     document.getElementById('score').textContent=score;
-    btn.classList.add('correct');
     fb.textContent=randMsg(CORRECT_MSGS);
     fb.className='feedback c';
-    obstacles.forEach(o=>{if(o.alive&&!o.clearing)o.clearing=true;});
     bVY=-2.2;
   }else{
     btn.classList.add('wrong');
     fb.textContent=randMsg(WRONG_MSGS)+' Correct: '+correctAns;
     fb.className='feedback w';
-    obstacles.forEach(o=>{if(o.alive&&!o.clearing)o.clearing=true;});
     lives--; updateHearts();
     if(lives<=0){ endGame(false); return; }
     by=Math.min(by+60,H-55);
-    bVY=levelParams(qIdx).balloonRise*0.5;
+    bVY=currentLevel.balloonRise*0.5;
     setTimeout(()=>{
       if(!gameOver){
-        const p=levelParams(qIdx);
-        for(let i=0;i<p.obsCount;i++) spawnObstacle(p.baseSpeed,i,p.obsCount);
+        for(let i=0;i<currentLevel.obsCount;i++) spawnObstacle(currentLevel.baseSpeed,i,currentLevel.obsCount);
         answered=false;
         fb.className='feedback';
         document.querySelectorAll('.ans-btn').forEach(b=>{b.disabled=false;b.classList.remove('correct','wrong');});
